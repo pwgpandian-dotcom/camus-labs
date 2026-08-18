@@ -6,6 +6,7 @@ import type { Database } from "./types";
  * Safe to call anywhere on the client — uses the public URL + publishable key.
  */
 export function createClient() {
+  // force rebuild: env var fix
   return createBrowserClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!

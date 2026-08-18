@@ -10,6 +10,7 @@ import type { Database } from "./types";
 export async function createClient() {
   const cookieStore = await cookies();
 
+  // force rebuild: env var fix
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
