@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------
+   CAMUS Labs Design Tokens
+   Premium, minimal, high-trust. Near-black/near-white base with a
+   single confident accent used deliberately, never decoratively.
+--------------------------------------------------------------- */
+
+:root {
+  --color-paper: #ffffff;
+  --color-mist: #fafafa;
+  --color-ink: #0a0a0b;
+
+  --color-slate-50: #f5f5f6;
+  --color-slate-100: #ececed;
+  --color-slate-200: #dedee0;
+  --color-slate-300: #c3c3c7;
+  --color-slate-400: #9a9aa0;
+  --color-slate-500: #6b6b70;
+  --color-slate-600: #4d4d52;
+  --color-slate-700: #34343a;
+  --color-slate-800: #222226;
+  --color-slate-900: #1c1c1f;
+
+  --color-signal: #3b5bff;
+  --color-signal-dark: #2c46e0;
+  --color-signal-50: #eef1ff;
+
+  --color-success: #1f9d6c;
+  --color-warning: #b98900;
+  --color-danger: #d6432f;
+
+  --font-display: -apple-system, "Segoe UI", "Inter", "Helvetica Neue", Arial,
+    ui-sans-serif, system-ui, sans-serif;
+  --font-body: -apple-system, "Segoe UI", "Inter", "Helvetica Neue", Arial,
+    ui-sans-serif, system-ui, sans-serif;
+  --font-mono-ui: ui-monospace, "SFMono-Regular", "Menlo", "Consolas",
+    monospace;
+
+  --background: var(--color-paper);
+  --foreground: var(--color-ink);
+}
+
+@theme inline {
+  --color-paper: var(--color-paper);
+  --color-mist: var(--color-mist);
+  --color-ink: var(--color-ink);
+
+  --color-slate-50: var(--color-slate-50);
+  --color-slate-100: var(--color-slate-100);
+  --color-slate-200: var(--color-slate-200);
+  --color-slate-300: var(--color-slate-300);
+  --color-slate-400: var(--color-slate-400);
+  --color-slate-500: var(--color-slate-500);
+  --color-slate-600: var(--color-slate-600);
+  --color-slate-700: var(--color-slate-700);
+  --color-slate-800: var(--color-slate-800);
+  --color-slate-900: var(--color-slate-900);
+
+  --color-signal: var(--color-signal);
+  --color-signal-dark: var(--color-signal-dark);
+  --color-signal-50: var(--color-signal-50);
+
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-danger: var(--color-danger);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono-ui);
+
+  --container-content: 1280px;
+  --container-prose: 720px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+::selection {
+  background: var(--color-signal);
+  color: var(--color-paper);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
