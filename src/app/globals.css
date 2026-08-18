@@ -30,12 +30,12 @@
   --color-warning: #b98900;
   --color-danger: #d6432f;
 
-  --font-display: -apple-system, "Segoe UI", "Inter", "Helvetica Neue", Arial,
-    ui-sans-serif, system-ui, sans-serif;
-  --font-body: -apple-system, "Segoe UI", "Inter", "Helvetica Neue", Arial,
-    ui-sans-serif, system-ui, sans-serif;
-  --font-mono-ui: ui-monospace, "SFMono-Regular", "Menlo", "Consolas",
-    monospace;
+  --font-display: var(--font-geist), -apple-system, "Segoe UI", "Inter Tight",
+    "Helvetica Neue", Arial, ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), -apple-system, "Segoe UI", "Helvetica Neue",
+    Arial, ui-sans-serif, system-ui, sans-serif;
+  --font-mono-ui: var(--font-jetbrains-mono), ui-monospace, "SFMono-Regular",
+    "Menlo", "Consolas", monospace;
 
   --background: var(--color-paper);
   --foreground: var(--color-ink);

@@ -22,14 +22,10 @@ const paths = [
   {
     icon: CalendarClock,
     title: "Book a consultation",
-    desc: "Talk it through first. Message us on WhatsApp and we'll set up a time.",
+    desc: "Talk it through first. Pick a slot and we'll confirm by email — or message us on WhatsApp.",
     action: (
-      <Button
-        href={whatsappLink("Hi CAMUS Labs, I'd like to book a consultation.")}
-        size="sm"
-        variant="secondary"
-      >
-        Book via WhatsApp
+      <Button href="/consultations" size="sm" variant="secondary">
+        Book a consultation
       </Button>
     ),
   },
