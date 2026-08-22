@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Layers, ShieldCheck, Sparkles, Users } from "lucide-react";
 import { PublicChrome } from "@/components/PublicChrome";
 import { Section } from "@/components/ui/Section";
+import { VideoShowcase } from "@/components/ui/VideoShowcase";
 import { Card } from "@/components/ui/Card";
 import { CTA } from "@/components/sections/CTA";
 import { siteConfig } from "@/lib/site-config";
@@ -43,7 +44,13 @@ export default function AboutPage() {
         heading="Technology for Every Idea."
         subheading="CAMUS Labs is a technology partner for businesses, startups, creators and ambitious ideas — we design, build and launch AI-powered software platforms end to end, from the first conversation through to launch and support."
         align="center"
-      />
+      >
+        <VideoShowcase
+          src="/videos/camus-labs-capability.mp4"
+          poster="/videos/camus-labs-capability.jpg"
+          caption="What CAMUS Labs builds — in one minute."
+        />
+      </Section>
 
       <Section eyebrow="Mission &amp; approach" heading="Software that's actually finished.">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">

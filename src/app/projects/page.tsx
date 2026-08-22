@@ -7,6 +7,7 @@ import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { VideoShowcase } from "@/components/ui/VideoShowcase";
 
 export const metadata: Metadata = {
   title: "Projects — CAMUS Labs",
@@ -29,12 +30,19 @@ export default async function ProjectsPage() {
         subheading="No placeholder logos, no invented results — every case study here is a project CAMUS Labs actually built."
         align="center"
       >
+        <VideoShowcase
+          src="/videos/camus-labs-projects.mp4"
+          poster="/videos/camus-labs-projects.jpg"
+          caption="The work so far — Trenzo, the Gold Loan System, Romance Cafe and Palmora Premium PG."
+        />
+
         {(!caseStudies || caseStudies.length === 0) && (
-          <div className="mx-auto flex max-w-lg flex-col items-center gap-4 rounded-2xl border border-dashed border-slate-300 px-8 py-16 text-center">
+          <div className="mx-auto mt-16 flex max-w-lg flex-col items-center gap-4 rounded-2xl border border-dashed border-slate-300 px-8 py-14 text-center">
             <ImageOff size={22} strokeWidth={1.5} className="text-slate-300" />
-            <p className="text-base font-medium text-ink">Nothing published yet</p>
+            <p className="text-base font-medium text-ink">Full case studies coming soon</p>
             <p className="text-sm leading-relaxed text-slate-500">
-              The first case studies go live the moment a project ships. Want to be one of them?
+              Each project above gets written up properly — the problem, the build, the result.
+              Want yours to be one of them?
             </p>
             <Button href="/start-project" size="sm">
               Start Your Project
