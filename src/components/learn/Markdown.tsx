@@ -40,9 +40,10 @@ function CodeBlock({ children, lang }: { children: string; lang?: string }) {
 }
 
 /** Renders AI Markdown safely (no raw HTML) with GFM tables, code and KaTeX maths. */
-export const Markdown = memo(function Markdown({ content, className }: { content: string; className?: string }) {
+export const Markdown = memo(function Markdown({ content, className, inline }: { content: string; className?: string; inline?: boolean }) {
+  const Wrapper = inline ? "span" : "div";
   return (
-    <div className={cn("prose-camus", className)}>
+    <Wrapper className={cn("prose-camus", inline && "block", className)}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkMath]}
         rehypePlugins={[[rehypeKatex, { throwOnError: false, strict: "ignore" }]]}
@@ -53,6 +54,7 @@ export const Markdown = memo(function Markdown({ content, className }: { content
             </a>
           ),
           pre: ({ children }) => <>{children}</>,
+          ...(inline ? { p: ({ children }: { children?: React.ReactNode }) => <span className="block">{children}</span> } : {}),
           code: ({ className: cls, children }) => {
             const text = String(children ?? "");
             const lang = /language-(\w+)/.exec(cls || "")?.[1];
@@ -64,6 +66,6 @@ export const Markdown = memo(function Markdown({ content, className }: { content
       >
         {content}
       </ReactMarkdown>
-    </div>
+    </Wrapper>
   );
 });
