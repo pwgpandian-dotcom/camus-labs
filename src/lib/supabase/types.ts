@@ -6344,6 +6344,21 @@ export type Database = {
       is_admin: { Args: never; Returns: boolean }
       is_staff: { Args: never; Returns: boolean }
       learn_ai_calls_today: { Args: never; Returns: number }
+      learn_cancel_subscription: { Args: { p_id: string }; Returns: undefined }
+      learn_check_coupon: { Args: { p_code: string }; Returns: number }
+      learn_request_plan: {
+        Args: {
+          p_coupon?: string
+          p_currency: string
+          p_interval: string
+          p_plan: string
+        }
+        Returns: string
+      }
+      learn_start_trial: {
+        Args: { p_currency: string; p_plan: string }
+        Returns: string
+      }
       submit_project_request: {
         Args: {
           p_budget_range: string

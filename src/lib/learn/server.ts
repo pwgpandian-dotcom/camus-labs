@@ -28,6 +28,7 @@ export const getLearner = cache(async () => {
       .select("*")
       .eq("user_id", user.id)
       .in("status", ACTIVE_STATUSES)
+      .or(`current_period_end.is.null,current_period_end.gt.${new Date().toISOString()}`)
       .order("created_at", { ascending: false })
       .limit(1),
   ]);
