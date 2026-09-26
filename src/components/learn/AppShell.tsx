@@ -27,7 +27,8 @@ interface ShellProps {
 export function AppShell({ children, locale, displayName, planName, isStaff, signOutAction }: ShellProps) {
   const pathname = usePathname();
   const t = getTranslator(locale);
-  const isChat = pathname.startsWith("/app/assistant");
+  // Immersive screens (chat, resume editor) bring their own header and hide the tab bar.
+  const isChat = pathname.startsWith("/app/assistant") || /^\/app\/resume\/[^/]+$/.test(pathname);
 
   return (
     <div className="flex min-h-dvh bg-mist">
