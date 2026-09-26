@@ -13,6 +13,10 @@ const primaryNav = [
   { href: "/admin/consultations", label: "Consultations" },
 ];
 
+const productNav = [
+  { href: "/admin/learn", label: "Camus Learn" },
+];
+
 const secondaryNav = [
   { href: "/admin/documents", label: "Documents" },
   { href: "/admin/payments", label: "Payments" },
@@ -58,6 +62,17 @@ export function AdminSidebar() {
           <NavLink key={item.href} {...item} />
         ))}
       </nav>
+
+      <div>
+        <p className="px-3 text-xs font-mono uppercase tracking-[0.1em] text-slate-400">
+          Products
+        </p>
+        <nav className="mt-2 flex flex-col gap-1">
+          {productNav.map((item) => (
+            <NavLink key={item.href} {...item} />
+          ))}
+        </nav>
+      </div>
 
       <div>
         <p className="px-3 text-xs font-mono uppercase tracking-[0.1em] text-slate-400">

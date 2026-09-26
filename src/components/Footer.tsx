@@ -5,6 +5,16 @@ import { siteConfig, whatsappLink } from "@/lib/site-config";
 
 const columns: { title: string; links: { href: string; label: string }[] }[] = [
   {
+    title: "Products",
+    links: [
+      { href: "/learn", label: "Camus Learn" },
+      { href: "/learn/careers", label: "Career guides" },
+      { href: "/products/stayos", label: "StayOS" },
+      { href: "/products/foodos", label: "FoodOS" },
+      { href: "/products", label: "All products" },
+    ],
+  },
+  {
     title: "Solutions",
     links: [
       { href: "/solutions/ai-agents", label: "AI & AI Agents" },
@@ -40,8 +50,8 @@ export function Footer() {
   return (
     <footer className="border-t border-slate-200 bg-mist">
       <Container className="py-16 md:py-20">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-6">
-          <div className="col-span-2">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-4 lg:grid-cols-7">
+          <div className="col-span-2 md:col-span-4 lg:col-span-2">
             <Link href="/" className="flex items-center gap-2">
               <span className="flex h-7 w-7 items-center justify-center rounded-md bg-ink text-paper text-sm font-semibold">
                 C
@@ -77,7 +87,7 @@ export function Footer() {
             </div>
           ))}
 
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <p className="text-xs font-mono uppercase tracking-[0.1em] text-slate-400">
               Talk to us
             </p>
