@@ -18,9 +18,14 @@ export default function LoginPage() {
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect") || "/portal";
+  const rawRedirect = searchParams.get("redirect") || "/portal";
+  // Only allow same-site relative redirects (prevents open-redirects like //evil.com).
+  const redirect = rawRedirect.startsWith("/") && !rawRedirect.startsWith("//") ? rawRedirect : "/portal";
+  const isLearn = redirect === "/app" || redirect.startsWith("/app/");
 
-  const [mode, setMode] = useState<"sign-in" | "sign-up">("sign-in");
+  const [mode, setMode] = useState<"sign-in" | "sign-up">(
+    searchParams.get("mode") === "sign-up" ? "sign-up" : "sign-in"
+  );
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -45,14 +50,23 @@ function LoginForm() {
       router.push(redirect);
       router.refresh();
     } else {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: { data: { full_name: fullName } },
+        options: {
+          data: { full_name: fullName },
+          emailRedirectTo: `${window.location.origin}${redirect}`,
+        },
       });
       setLoading(false);
       if (error) {
         setError(error.message);
+        return;
+      }
+      if (data.session) {
+        // Email confirmation is off — the user is signed in already.
+        router.push(isLearn ? "/app/onboarding" : redirect);
+        router.refresh();
         return;
       }
       setNotice(
@@ -63,7 +77,7 @@ function LoginForm() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-mist">
+    <main className="flex min-h-dvh items-center justify-center bg-mist px-4 py-10">
       <Container className="max-w-[420px]">
         <div className="rounded-2xl border border-slate-200 bg-paper p-8">
           <Link href="/" className="flex items-center gap-2">
@@ -79,9 +93,13 @@ function LoginForm() {
             {mode === "sign-in" ? "Sign in to your account" : "Create your account"}
           </h1>
           <p className="mt-2 text-sm text-slate-500">
-            {mode === "sign-in"
-              ? "Access your client portal or admin dashboard."
-              : "Client portal access is normally provisioned by our team — use this only if you were asked to self-register."}
+            {isLearn
+              ? mode === "sign-in"
+                ? "Continue your learning and career journey with Camus Learn."
+                : "Free to start. No card required."
+              : mode === "sign-in"
+                ? "Access your client portal or admin dashboard."
+                : "Client portal access is normally provisioned by our team — use this only if you were asked to self-register."}
           </p>
 
           <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
@@ -93,10 +111,11 @@ function LoginForm() {
                 <input
                   id="fullName"
                   type="text"
+                  autoComplete="name"
                   required
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="mt-1.5 w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm outline-none focus:border-ink"
+                  className="mt-1.5 w-full min-h-11 rounded-lg border border-slate-300 px-3.5 py-2.5 text-base md:text-sm outline-none focus:border-ink"
                 />
               </div>
             )}
@@ -107,10 +126,12 @@ function LoginForm() {
               <input
                 id="email"
                 type="email"
+                autoComplete="email"
+                inputMode="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1.5 w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm outline-none focus:border-ink"
+                className="mt-1.5 w-full min-h-11 rounded-lg border border-slate-300 px-3.5 py-2.5 text-base md:text-sm outline-none focus:border-ink"
               />
             </div>
             <div>
@@ -120,11 +141,12 @@ function LoginForm() {
               <input
                 id="password"
                 type="password"
+                autoComplete={mode === "sign-in" ? "current-password" : "new-password"}
                 required
                 minLength={6}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1.5 w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm outline-none focus:border-ink"
+                className="mt-1.5 w-full min-h-11 rounded-lg border border-slate-300 px-3.5 py-2.5 text-base md:text-sm outline-none focus:border-ink"
               />
             </div>
 

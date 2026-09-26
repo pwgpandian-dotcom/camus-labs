@@ -37,8 +37,9 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isPortalRoute = pathname.startsWith("/portal");
   const isAdminRoute = pathname.startsWith("/admin");
+  const isLearnApp = pathname === "/app" || pathname.startsWith("/app/");
 
-  if ((isPortalRoute || isAdminRoute) && !user) {
+  if ((isPortalRoute || isAdminRoute || isLearnApp) && !user) {
     const loginUrl = new URL("/login", request.url);
     loginUrl.searchParams.set("redirect", pathname);
     return NextResponse.redirect(loginUrl);
@@ -61,5 +62,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/portal/:path*", "/admin/:path*"],
+  matcher: ["/portal/:path*", "/admin/:path*", "/app", "/app/:path*"],
 };
