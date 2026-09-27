@@ -10,6 +10,7 @@ import { LandingPricing } from "@/components/learn/landing/LandingPricing";
 import { InstallPrompt } from "@/components/learn/InstallPrompt";
 import { createPublicClient } from "@/lib/supabase/public";
 import { LOCALES } from "@/lib/learn/i18n";
+import { IndiaFlag } from "@/components/learn/IndiaFlag";
 
 const title = "Camus Learn — AI learning & career platform";
 const description =
@@ -89,7 +90,7 @@ export default async function LearnLandingPage() {
         <Container className="relative grid grid-cols-1 items-center gap-12 pb-16 pt-16 md:pt-24 lg:grid-cols-[1.1fr_0.9fr] lg:pb-24">
           <div>
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-paper px-3.5 py-1.5 text-xs text-slate-500">
-              <span className="h-1.5 w-1.5 rounded-full bg-signal" /> Camus Learn by CAMUS Labs
+              <IndiaFlag className="h-3 w-[18px] rounded-[2px]" title="" /> Made in Bharat · for India&apos;s youth and learners worldwide
             </div>
             <h1 className="text-balance text-5xl font-medium leading-[1.02] tracking-tight text-ink md:text-6xl lg:text-[4.75rem]">
               Learn. Build.
@@ -171,6 +172,20 @@ export default async function LearnLandingPage() {
           />
         </div>
       </Section>
+
+      {/* Made in India */}
+      <section aria-labelledby="bharat" className="border-t border-slate-200 py-16 md:py-24">
+        <Container className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[auto_1fr] lg:gap-16">
+          <IndiaFlag className="h-24 w-36 rounded-lg shadow-sm md:h-32 md:w-48" />
+          <div className="max-w-2xl">
+            <p className="mb-3 font-mono text-xs uppercase tracking-[0.14em] text-signal">Made in Bharat 🇮🇳</p>
+            <h2 id="bharat" className="text-balance text-3xl font-medium leading-[1.1] tracking-tight text-ink md:text-4xl">Built in India, for India&apos;s youth — and learners everywhere.</h2>
+            <p className="mt-4 text-base leading-relaxed text-slate-500 md:text-lg">
+              Camus Learn is designed and built in India by CAMUS Labs. It starts where millions of Indian students start — board exams, NEET, JEE, CAT, GATE and UPSC, first jobs and first projects — and is priced in rupees so it stays within reach. The same platform works for learners in every country.
+            </p>
+          </div>
+        </Container>
+      </section>
 
       {/* Global + install */}
       <section className="border-y border-slate-200 bg-mist py-16 md:py-24">

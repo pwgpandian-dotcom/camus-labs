@@ -129,7 +129,7 @@ export function Footer() {
 
         <div className="mt-16 flex flex-col-reverse items-start justify-between gap-4 border-t border-slate-200 pt-8 md:flex-row md:items-center">
           <p className="text-xs text-slate-400">
-            © {new Date().getFullYear()} CAMUS Labs. All rights reserved.
+            © {new Date().getFullYear()} CAMUS Labs. All rights reserved. · Made in India 🇮🇳
           </p>
           <div className="flex gap-6">
             <Link href="/legal/privacy" className="text-xs text-slate-500 hover:text-ink">
