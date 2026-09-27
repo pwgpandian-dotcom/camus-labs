@@ -5,7 +5,7 @@ export function Page({ children, className, width = "default" }: { children: Rea
   return (
     <div
       className={cn(
-        "mx-auto w-full px-4 py-6 md:px-8 md:py-10 pl-safe pr-safe",
+        "mx-auto w-full px-[max(1rem,env(safe-area-inset-left))] py-6 md:px-8 md:py-10",
         width === "narrow" ? "max-w-3xl" : width === "wide" ? "max-w-[1400px]" : "max-w-6xl",
         className
       )}

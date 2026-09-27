@@ -106,11 +106,8 @@ export default async function LearnLandingPage() {
               Already learning? <Link href="/login?redirect=/app" className="text-ink underline underline-offset-2">Sign in</Link>
             </p>
           </div>
-          <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+          <div className="relative mx-auto w-full max-w-md lg:max-w-[520px]">
             <DashboardPreview />
-            <div className="absolute -bottom-8 -left-6 hidden w-64 md:block">
-              <TutorPreview />
-            </div>
           </div>
         </Container>
       </section>
