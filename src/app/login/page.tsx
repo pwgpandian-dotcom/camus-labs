@@ -166,6 +166,30 @@ function LoginForm() {
             </Button>
           </form>
 
+          {mode === "sign-in" && (
+            <button
+              type="button"
+              onClick={async () => {
+                setError(null);
+                setNotice(null);
+                if (!email) {
+                  setError("Enter your email above, then tap “Forgot password?” again.");
+                  return;
+                }
+                setLoading(true);
+                const { error } = await createClient().auth.resetPasswordForEmail(email, {
+                  redirectTo: `${window.location.origin}/reset-password`,
+                });
+                setLoading(false);
+                if (error) setError(error.message);
+                else setNotice("If an account exists for this email, a password reset link is on its way. Check your inbox.");
+              }}
+              className="mt-4 block text-sm text-signal-dark hover:underline"
+            >
+              Forgot password?
+            </button>
+          )}
+
           <button
             onClick={() => {
               setMode(mode === "sign-in" ? "sign-up" : "sign-in");
