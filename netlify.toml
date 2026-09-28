@@ -1,0 +1,16 @@
+# Netlify deploy for Camus Learn (free plan, no card: site pauses — never
+# bills — if the monthly free credits run out).
+# Next.js is auto-detected; @netlify/plugin-nextjs handles SSR, Server
+# Actions, route handlers and proxy.ts. Only PUBLIC values belong here.
+# Server secrets (AI keys) go in Netlify UI → Site configuration →
+# Environment variables, scoped to "Functions" — never in this file.
+
+[build]
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "22"
+  CAMUS_LEARN_AT_ROOT = "true"
+  NEXT_PUBLIC_SITE_URL = "https://camus-learn.netlify.app"
+  NEXT_PUBLIC_SUPABASE_URL = "https://ltiitmdnyymqimnjnzfl.supabase.co"
+  NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0aWl0bWRueXltcWltbmpuemZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5OTEwNzEsImV4cCI6MjEwMjU2NzA3MX0.MYX4HCQ-AcGkQRVe30wYbD3FOGwqTFDAdh_Mc97js4o"
