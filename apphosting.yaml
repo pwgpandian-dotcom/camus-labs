@@ -23,8 +23,14 @@ env:
     availability: [BUILD, RUNTIME]
 
   # Canonical URL used for metadataBase, OpenGraph, sitemap.xml and robots.txt.
+  # V1 uses the free Firebase subdomain; switch to https://camuslearn.com later.
   - variable: NEXT_PUBLIC_SITE_URL
-    value: https://camuslearn.com
+    value: https://camus-learn.web.app
+    availability: [BUILD, RUNTIME]
+
+  # Serve Camus Learn (not the agency homepage) at "/" on this deployment.
+  - variable: CAMUS_LEARN_AT_ROOT
+    value: "true"
     availability: [BUILD, RUNTIME]
 
   # ── AI providers (server-only) ─────────────────────────────────────────

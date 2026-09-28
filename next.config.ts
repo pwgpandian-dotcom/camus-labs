@@ -6,6 +6,12 @@ import type { NextConfig } from "next";
 // agency site keeps working on its own domain(s).
 const CAMUS_LEARN_HOSTS = "(www\\.)?camuslearn\\.com";
 
+// Deployments dedicated to Camus Learn (e.g. Firebase: camus-learn.web.app)
+// set CAMUS_LEARN_AT_ROOT=true at build time so "/" shows Camus Learn no
+// matter which host/proxy the request arrives through. Unset on Vercel, so
+// camus-labs.vercel.app keeps the agency homepage.
+const LEARN_AT_ROOT = process.env.CAMUS_LEARN_AT_ROOT === "true";
+
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
@@ -20,6 +26,7 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return {
       beforeFiles: [
+        ...(LEARN_AT_ROOT ? [{ source: "/", destination: "/learn" }] : []),
         {
           source: "/",
           has: [{ type: "host", value: CAMUS_LEARN_HOSTS }],
