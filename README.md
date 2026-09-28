@@ -174,3 +174,27 @@ Phase 2 (remaining public pages: Solutions, Industries, About) and Phase 3
 (Start Your Project flow) are the natural next steps — the `project_requests`
 table and reference-number generation are already built and waiting for that
 form to write to them.
+
+---
+
+## Camus Learn — AI learning & career platform
+
+A full product inside this repo (branch `feat/camus-learn`).
+
+| Area | Route |
+|---|---|
+| Landing page | `/learn` (+ public SEO guides: `/learn/careers`, `/learn/subjects`, `/learn/exams`, `/learn/academy`) |
+| Products catalog (Learn + StayOS/FoodOS/CareOS/JewelOS/PawnOS, live `cml_plans` pricing) | `/products`, `/products/[slug]` |
+| Learner app (auth required) | `/app` — onboarding, dashboard, assistant, study tutor, exams, careers, roadmaps, resume, job match, interview coach, projects, AI academy, founder mode, Career Twin, billing, settings |
+| Admin | `/admin/learn` — overview analytics, learners, subscriptions (confirm payment → activate), pricing & coupons, AI models & prompts, exams & question bank, feature flags & regions, audit log |
+
+**Architecture.** `src/lib/learn/ai/*` is a provider-agnostic AI layer (Anthropic / OpenAI / Gemini via `fetch`, SSE streaming, zod-validated JSON with one repair retry, per-plan daily quotas, usage ledger). Business logic lives in server actions (`src/app/actions/learn/*`) and route handlers (`src/app/api/learn/*`), so a future native/Expo app can reuse the same backend. Database: `supabase/migrations/0007–0009` (all tables prefixed `learn_`, RLS on every table). Security checks: `supabase/tests/learn_rls.sql`.
+
+**Honesty rules baked in:** no fabricated stats or customers; resume/profile AI never invents experience or credentials; no ATS scores or job guarantees; projects are only complete when the learner says so; minors get an age band (never DOB), hidden emails in admin, no founder mode/resume tools.
+
+**Payments.** No card gateway yet: learners can start a one-time free trial or request an upgrade (stored as `pending`, grants nothing). Staff record the payment in `/admin/learn/subscriptions`, which activates the plan. Feature gating by plan is behind the `plan_gating` flag (off by default); AI daily limits are always enforced.
+
+**To go live**
+1. Add `ANTHROPIC_API_KEY` (or `OPENAI_API_KEY` / `GOOGLE_AI_API_KEY`) to Vercel env.
+2. In Supabase → Auth → URL configuration, add `https://<your-domain>/app` to redirect URLs (sign-up confirmation links).
+3. `npm run check` (lint + typecheck + unit tests + build).

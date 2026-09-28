@@ -6,6 +6,8 @@ import { Button } from "./ui/Button";
 import { Container } from "./ui/Container";
 
 const links = [
+  { href: "/products", label: "Products" },
+  { href: "/learn", label: "Camus Learn" },
   { href: "/solutions", label: "Solutions" },
   { href: "/industries", label: "Industries" },
   { href: "/projects", label: "Projects" },
@@ -17,7 +19,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-paper/85 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-paper/85 backdrop-blur-md pt-safe">
       <Container className="flex h-18 items-center justify-between py-4">
         <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
           <span className="flex h-7 w-7 items-center justify-center rounded-md bg-ink text-paper text-sm font-semibold">
@@ -28,7 +30,7 @@ export function Navbar() {
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-7">
           {links.map((link) => (
             <Link
               key={link.href}
@@ -40,7 +42,7 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3">
           <Button href="/contact" variant="ghost" size="sm">
             Book a Consultation
           </Button>
@@ -53,7 +55,7 @@ export function Navbar() {
           aria-label="Toggle menu"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="flex md:hidden h-9 w-9 items-center justify-center rounded-full border border-slate-200"
+          className="flex lg:hidden h-10 w-10 items-center justify-center rounded-full border border-slate-200"
         >
           <span className="sr-only">Menu</span>
           <div className="flex flex-col gap-1.5">
@@ -64,7 +66,7 @@ export function Navbar() {
       </Container>
 
       {open && (
-        <div className="md:hidden border-t border-slate-200 bg-paper">
+        <div className="lg:hidden border-t border-slate-200 bg-paper">
           <Container className="flex flex-col gap-1 py-4">
             {links.map((link) => (
               <Link

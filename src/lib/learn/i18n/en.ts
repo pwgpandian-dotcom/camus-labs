@@ -1,0 +1,55 @@
+/**
+ * English source strings for Camus Learn. Add a locale by creating a file
+ * with the same keys (e.g. ta.ts) and registering it in ./index.ts — any key
+ * missing from a translation falls back to English automatically.
+ */
+export const en = {
+  "brand.name": "Camus Learn",
+  "nav.home": "Home",
+  "nav.assistant": "Assistant",
+  "nav.learn": "Learn",
+  "nav.careers": "Careers",
+  "nav.career": "Career",
+  "nav.more": "More",
+  "nav.study": "Study tutor",
+  "nav.exams": "Exam prep",
+  "nav.roadmaps": "Skill roadmaps",
+  "nav.projects": "Project builder",
+  "nav.resume": "Resume builder",
+  "nav.jobs": "Job match",
+  "nav.interview": "Interview coach",
+  "nav.academy": "AI Academy",
+  "nav.founder": "Founder mode",
+  "nav.profile": "Career Twin",
+  "nav.billing": "Plan & billing",
+  "nav.settings": "Settings",
+  "nav.admin": "Admin",
+  "nav.signOut": "Sign out",
+  "section.learn": "Learn",
+  "section.career": "Career",
+  "section.build": "Build",
+  "section.account": "Account",
+  "cta.continueLearning": "Continue learning",
+  "cta.startPractice": "Start practice",
+  "cta.improveResume": "Improve resume",
+  "cta.practiceInterview": "Practice interview",
+  "cta.buildProject": "Build project",
+  "cta.exploreCareer": "Explore careers",
+  "cta.completeGoal": "Complete today's goal",
+  "cta.askAssistant": "Ask the assistant",
+  "state.loading": "Loading…",
+  "state.error": "Something went wrong",
+  "state.retry": "Try again",
+  "state.empty": "Nothing here yet",
+  "ai.notConfigured": "AI isn't switched on for this workspace yet. An administrator needs to add an AI provider key.",
+  "install.title": "Install Camus Learn",
+  "install.ios": "Add Camus Learn to your Home Screen",
+  "install.iosStep1": "Tap the Share button",
+  "install.iosStep2": "Choose “Add to Home Screen”",
+  "install.iosStep3": "Tap Add",
+  "install.cta": "Install app",
+  "install.dismiss": "Not now",
+} as const;
+
+export type MessageKey = keyof typeof en;
+export type Messages = Record<MessageKey, string>;

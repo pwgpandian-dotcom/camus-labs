@@ -1,0 +1,44 @@
+# Firebase App Hosting configuration for CAMUS Labs / Camus Learn.
+# Docs: https://firebase.google.com/docs/app-hosting/configure
+#
+# NEXT_PUBLIC_* values are public by design (they ship in the browser bundle),
+# so they live here. Private keys must NEVER be added as plain `value:` —
+# store them with `firebase apphosting:secrets:set <NAME>` and reference them
+# with `secret:` (see the commented AI keys below).
+
+runConfig:
+  minInstances: 0   # scale to zero when idle → lowest cost
+  maxInstances: 4   # hard cap on concurrent instances (cost guard)
+  concurrency: 80
+  cpu: 1
+  memoryMiB: 512
+
+env:
+  - variable: NEXT_PUBLIC_SUPABASE_URL
+    value: https://ltiitmdnyymqimnjnzfl.supabase.co
+    availability: [BUILD, RUNTIME]
+
+  - variable: NEXT_PUBLIC_SUPABASE_ANON_KEY
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0aWl0bWRueXltcWltbmpuemZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5OTEwNzEsImV4cCI6MjEwMjU2NzA3MX0.MYX4HCQ-AcGkQRVe30wYbD3FOGwqTFDAdh_Mc97js4o
+    availability: [BUILD, RUNTIME]
+
+  # Canonical URL used for metadataBase, OpenGraph, sitemap.xml and robots.txt.
+  - variable: NEXT_PUBLIC_SITE_URL
+    value: https://camuslearn.com
+    availability: [BUILD, RUNTIME]
+
+  # ── AI providers (server-only) ─────────────────────────────────────────
+  # Camus Learn uses whichever provider has a key. Uncomment ONLY after the
+  # secret exists in Cloud Secret Manager, otherwise the rollout fails:
+  #   firebase apphosting:secrets:set ANTHROPIC_API_KEY
+  #   firebase apphosting:secrets:grantaccess ANTHROPIC_API_KEY --backend <backend-id>
+  #
+  # - variable: ANTHROPIC_API_KEY
+  #   secret: ANTHROPIC_API_KEY
+  #   availability: [RUNTIME]
+  # - variable: OPENAI_API_KEY
+  #   secret: OPENAI_API_KEY
+  #   availability: [RUNTIME]
+  # - variable: GOOGLE_AI_API_KEY
+  #   secret: GOOGLE_AI_API_KEY
+  #   availability: [RUNTIME]
