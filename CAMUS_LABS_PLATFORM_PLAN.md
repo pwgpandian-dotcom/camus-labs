@@ -170,7 +170,7 @@ Row Level Security approach: clients can only read rows where `client_id` matche
 - **Frontend:** Next.js (App Router) + TypeScript + React + Tailwind CSS. Server Components by default; client components only where interactivity requires it (forms, stepper, dashboard widgets).
 - **Backend:** Supabase (Postgres + Auth + Row Level Security + Storage). Server Actions for mutations (lead capture, project requests, consultation booking); Supabase client for authenticated portal/admin reads.
 - **Auth:** Supabase Auth (email/password + magic link). Three roles enforced via RLS policies and route middleware: `client`, `admin`/`operator`, and public/anon.
-- **Infrastructure:** Vercel for hosting/CI, Cloudinary for case-study screenshots and marketing media (Supabase Storage for private client documents).
+- **Infrastructure:** Firebase (camus-learn.web.app) for hosting, GitHub for CI, Cloudinary for case-study screenshots and marketing media (Supabase Storage for private client documents).
 - **AI layer:** Anthropic/OpenAI APIs for the specific agent use cases described on `/ai-agents` (support, lead qualification, document processing, research, scheduling) — built as real backend workflows in a later phase, not a chat widget bolted onto the marketing site.
 - **Environment variables:** `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` (server-only), `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` (server-only), `CLOUDINARY_URL`. None are hardcoded; `.env.example` ships with the repo, real values stay out of git.
 

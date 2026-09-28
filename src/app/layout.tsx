@@ -26,7 +26,7 @@ const jetbrainsMono = localFont({
   weight: "100 800",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://camus-labs.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://camus-learn.web.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

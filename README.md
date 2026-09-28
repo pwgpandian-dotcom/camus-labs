@@ -97,7 +97,7 @@ manual invoice tracker until Razorpay/Stripe keys exist (Phase 6).
 
 - **Fonts:** this sandbox had no outbound access to Google Fonts, so the
   design system ships with a system-font stack instead of `next/font/google`.
-  Swap it in on Vercel (which has full internet access) for pixel-exact brand
+  Swap it in on the hosting build (which has full internet access) for pixel-exact brand
   typography — a one-line change in `layout.tsx` + the `--font-*` variables in
   `globals.css`.
 - **No fabricated content:** no fake clients, projects, testimonials, or
@@ -195,6 +195,6 @@ A full product inside this repo (branch `feat/camus-learn`).
 **Payments.** No card gateway yet: learners can start a one-time free trial or request an upgrade (stored as `pending`, grants nothing). Staff record the payment in `/admin/learn/subscriptions`, which activates the plan. Feature gating by plan is behind the `plan_gating` flag (off by default); AI daily limits are always enforced.
 
 **To go live**
-1. Add `ANTHROPIC_API_KEY` (or `OPENAI_API_KEY` / `GOOGLE_AI_API_KEY`) to Vercel env.
-2. In Supabase → Auth → URL configuration, add `https://<your-domain>/app` to redirect URLs (sign-up confirmation links).
+1. Add `ANTHROPIC_API_KEY` (or `OPENAI_API_KEY` / `GOOGLE_AI_API_KEY`) as a server-side secret on the host (Firebase App Hosting: `firebase apphosting:secrets:set`).
+2. In Supabase → Auth → URL configuration, set Site URL to `https://camus-learn.web.app` and add `https://camus-learn.web.app/**` to redirect URLs (sign-up confirmation links).
 3. `npm run check` (lint + typecheck + unit tests + build).

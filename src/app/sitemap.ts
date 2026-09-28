@@ -5,7 +5,7 @@ import { products } from "@/lib/products";
 import { solutions } from "@/lib/solutions";
 import { industries } from "@/lib/industries";
 
-const base = process.env.NEXT_PUBLIC_SITE_URL || "https://camus-labs.vercel.app";
+const base = process.env.NEXT_PUBLIC_SITE_URL || "https://camus-learn.web.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

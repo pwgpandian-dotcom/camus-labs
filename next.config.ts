@@ -8,8 +8,8 @@ const CAMUS_LEARN_HOSTS = "(www\\.)?camuslearn\\.com";
 
 // Deployments dedicated to Camus Learn (e.g. Firebase: camus-learn.web.app)
 // set CAMUS_LEARN_AT_ROOT=true at build time so "/" shows Camus Learn no
-// matter which host/proxy the request arrives through. Unset on Vercel, so
-// camus-labs.vercel.app keeps the agency homepage.
+// matter which host/proxy the request arrives through. Without the flag,
+// "/" keeps the CAMUS Labs agency homepage.
 const LEARN_AT_ROOT = process.env.CAMUS_LEARN_AT_ROOT === "true";
 
 const securityHeaders = [
