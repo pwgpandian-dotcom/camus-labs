@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { careers } from "@/lib/learn/catalog/careers";
 import { subjects } from "@/lib/learn/catalog/subjects";
-import { products } from "@/lib/products";
 import { solutions } from "@/lib/solutions";
 import { industries } from "@/lib/industries";
 import { apps } from "@/lib/apps";
@@ -19,7 +18,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url("/pricing", 0.8),
     ...apps.filter((a) => !a.href).map((a) => url(`/apps/${a.slug}`, 0.7)),
     ...hubs.map((h) => url(`/for/${h.slug}`, 0.8)),
-    ...products.filter((p) => !p.href).map((p) => url(`/products/${p.slug}`, 0.7)),
     url("/learn/careers", 0.8),
     ...careers.map((c) => url(`/learn/careers/${c.slug}`, 0.7)),
     url("/learn/subjects", 0.7),

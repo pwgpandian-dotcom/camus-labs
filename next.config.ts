@@ -38,6 +38,13 @@ const nextConfig: NextConfig = {
     };
   },
 
+  // Older "OS" product pages now live as Camus app pages.
+  async redirects() {
+    return [
+      ["foodos", "restaurant-pos"], ["careos", "clinic"], ["stayos", "stay"], ["pawnos", "gold-loan"], ["jewelos", "jewel"],
+    ].map(([from, to]) => ({ source: `/products/${from}`, destination: `/apps/${to}`, permanent: true }));
+  },
+
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
