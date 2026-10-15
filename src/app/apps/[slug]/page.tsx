@@ -252,8 +252,8 @@ export default async function AppPage({ params }: PageProps<"/apps/[slug]">) {
       {d.groups.length > 0 && (
         <section id={d.explore.length ? "all-features" : "features"} className={cn("scroll-mt-[140px]", d.compare.length ? "bg-cloud" : "")}>
           <Container className="py-20 md:py-24">
-            <SectionHead eyebrow={d.explore.length ? "Complete feature list" : "Features"} title={d.explore.length ? "All features at a glance" : `What you get with Camus ${app.name}`} />
-            <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <SectionHead eyebrow={d.explore.length ? "Complete feature list" : "Features"} title={d.explore.length ? `${d.groups.reduce((n, g) => n + g.items.length, 0)} features in Camus ${app.name}` : `What you get with Camus ${app.name}`} sub={d.explore.length ? "Everything below is configured for your business during setup." : undefined} />
+            <div className={cn("mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3", d.groups.length % 4 === 0 && "xl:grid-cols-4")}>
               {d.groups.map((g) => (
                 <div key={g.name} className="rounded-[22px] border border-slate-200 bg-white p-7">
                   <h3 className="text-[20px] font-semibold text-ink">{g.name}</h3>
