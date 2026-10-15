@@ -13,11 +13,23 @@ export interface Plan {
 }
 
 export const plans: Plan[] = [
-  { id: "starter", name: "Starter", for: "One shop or outlet getting started.", monthly: null, yearly: null, limits: ["Up to 3 apps", "1 branch", "Up to 3 users", "WhatsApp support"] },
+  { id: "starter", name: "Starter", for: "One shop or outlet getting started.", monthly: 5999, yearly: null, limits: ["Up to 3 apps", "1 branch", "Up to 3 users", "WhatsApp support"] },
   { id: "growth", name: "Growth", for: "Growing business with a team.", monthly: null, yearly: null, popular: true, limits: ["Up to 8 apps", "Up to 3 branches", "Up to 15 users", "Owner dashboard", "WhatsApp and phone support"] },
   { id: "business", name: "Business", for: "Multiple branches, full operations.", monthly: null, yearly: null, limits: ["All Camus apps (Camus One)", "Up to 10 branches", "Up to 50 users", "Small customisations", "Priority support"] },
   { id: "enterprise", name: "Enterprise", for: "Large organisations and government.", monthly: null, yearly: null, limits: ["All apps + Camus Studio", "Unlimited branches", "Custom user count", "Dedicated solution architect", "Written support terms"] },
 ];
+
+/** Paid guided demo, adjusted against the setup fee if the customer goes ahead. */
+export const demo = {
+  fee: 3999,
+  duration: "60-minute guided demo",
+  points: [
+    "Demo with your own products, customers and bills",
+    "Walkthrough of the apps your business needs",
+    "Written proposal with scope, timeline and price",
+    "Fee adjusted against your setup if you go ahead",
+  ],
+};
 
 export const compare: { feature: string; values: [string, string, string, string] }[] = [
   { feature: "Apps included", values: ["Up to 3", "Up to 8", "All", "All + custom"] },
@@ -32,6 +44,7 @@ export const compare: { feature: string; values: [string, string, string, string
 
 export const pricingFaq = [
   { q: "What do I pay for?", a: "Two things: a one-time setup fee to configure the apps for your business, move your data and train your team — and a monthly or yearly subscription." },
+  { q: "Why is the demo paid?", a: "The ₹3,999 demo is a real working session: we load your own products and customers and prepare a written proposal. If you go ahead, the fee is adjusted against your setup." },
   { q: "Can I start small and add apps later?", a: "Yes. Start with the apps you need and move to a bigger plan anytime. Your data stays in place." },
   { q: "Do I sign an agreement?", a: "Yes. Scope, price and timeline are written down before we start, so both sides are clear." },
   { q: "What happens to my data if I stop?", a: "You can export all your data. It is yours." },

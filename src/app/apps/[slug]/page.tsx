@@ -9,6 +9,7 @@ import { FinalCTA } from "@/components/home/HomeSections";
 import { apps, appHref, getApp } from "@/lib/apps";
 import { hubs } from "@/lib/hubs";
 import { whatsappLink } from "@/lib/site-config";
+import { demo as demoInfo, formatINR } from "@/lib/pricing";
 
 export function generateStaticParams() {
   return apps.filter((a) => !a.href).map((a) => ({ slug: a.slug }));
@@ -35,7 +36,7 @@ export default async function AppPage({ params }: PageProps<"/apps/[slug]">) {
 
   const related = apps.filter((a) => a.category === app.category && a.slug !== app.slug).slice(0, 3);
   const usedIn = hubs.filter((h) => h.apps.includes(app.slug));
-  const demo = whatsappLink(`Hi Camus Labs, I'd like a demo of Camus ${app.name}.`);
+  const demo = whatsappLink(`Hi Camus Labs, I'd like to book the ${formatINR(demoInfo.fee)} guided demo of Camus ${app.name}.`);
   const isStudio = app.slug === "studio";
 
   return (
@@ -57,7 +58,7 @@ export default async function AppPage({ params }: PageProps<"/apps/[slug]">) {
           )}
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/contact" className="rounded-full bg-signal px-7 py-4 text-base font-semibold text-white hover:bg-signal-dark">{isStudio ? "Share your requirement" : "Talk to our solutions team"}</Link>
-            <a href={demo} target="_blank" rel="noopener noreferrer" className="rounded-full border border-slate-300 bg-white px-7 py-4 text-base font-semibold text-ink hover:border-signal">Ask on WhatsApp</a>
+            <a href={demo} target="_blank" rel="noopener noreferrer" className="rounded-full border border-slate-300 bg-white px-7 py-4 text-base font-semibold text-ink hover:border-signal">Request a demo · {formatINR(demoInfo.fee)}</a>
           </div>
         </Container>
       </section>

@@ -6,7 +6,8 @@ import { Container } from "@/components/ui/Container";
 import { NetworkMark } from "@/components/brand/Logo";
 import { AppIcon } from "@/components/brand/AppIcon";
 import { FinalCTA } from "@/components/home/HomeSections";
-import { compare, formatINR, plans, pricingFaq } from "@/lib/pricing";
+import { compare, demo, formatINR, plans, pricingFaq } from "@/lib/pricing";
+import { whatsappLink } from "@/lib/site-config";
 import { apps } from "@/lib/apps";
 import { cn } from "@/lib/cn";
 
@@ -41,19 +42,32 @@ export default function PricingPage() {
               <p className="min-h-[48px] text-base text-slate-600">{p.for}</p>
               <p>
                 {p.monthly != null ? (
-                  <><span className="text-[34px] font-semibold tracking-tight text-ink">{formatINR(p.monthly)}</span><span className="text-[15px] text-slate-600"> / month</span></>
+                  <><span className="text-[34px] font-semibold tracking-tight text-ink">{formatINR(p.monthly)}</span><span className="text-[15px] text-slate-600"> /month</span></>
                 ) : (
                   <span className="text-[26px] font-semibold tracking-tight text-ink">Contact sales</span>
                 )}
               </p>
-              <p className="text-sm font-medium text-slate-600">+ one-time setup, quoted for your business</p>
-              <Link href="/contact" className={cn("rounded-full px-5 py-3 text-center text-base font-semibold", p.popular ? "bg-signal text-white hover:bg-signal-dark" : "border border-slate-300 text-ink hover:border-signal")}>Talk to sales</Link>
+              <p className="text-sm font-medium text-slate-600">{p.monthly != null ? "+ one-time setup by our team" : "+ one-time setup, quoted for your business"}</p>
+              <Link href="/contact" className={cn("rounded-full px-5 py-3 text-center text-base font-semibold", p.popular || p.monthly != null ? "bg-signal text-white hover:bg-signal-dark" : "border border-slate-300 text-ink hover:border-signal")}>{p.monthly != null ? "Get started" : "Talk to sales"}</Link>
+              <a href="#demo" className="-mt-1 text-center text-[15px] font-semibold text-signal-dark hover:text-ink">Request a demo</a>
               <ul className="mt-1 grid gap-2.5 border-t border-slate-200 pt-5">
                 {p.limits.map((l) => <li key={l} className="flex gap-2.5 text-[15px] font-medium text-slate-800"><Check size={19} className="shrink-0 text-signal" />{l}</li>)}
               </ul>
             </li>
           ))}
         </ul>
+
+        <div id="demo" className="mt-10 grid scroll-mt-28 grid-cols-1 items-center gap-8 rounded-3xl bg-navy p-7 text-white md:p-10 lg:grid-cols-[1fr_auto]">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[#9CC3E0]">Request a demo</p>
+            <p className="mt-2 text-[28px] font-semibold leading-tight tracking-tight md:text-[34px]">See Camus working for your business — {formatINR(demo.fee)}</p>
+            <p className="mt-2 text-lg text-slate-200">{demo.duration} with our solutions team.</p>
+            <ul className="mt-5 grid gap-2.5 sm:grid-cols-2">
+              {demo.points.map((x) => <li key={x} className="flex gap-2.5 text-base font-medium text-slate-100"><Check size={20} className="shrink-0 text-[#9CC3E0]" />{x}</li>)}
+            </ul>
+          </div>
+          <a href={whatsappLink(`Hi Camus Labs, I'd like to book the ${formatINR(demo.fee)} guided demo for my business.`)} target="_blank" rel="noopener noreferrer" className="rounded-full bg-brand px-8 py-4 text-center text-base font-semibold text-white hover:bg-signal">Book a demo · {formatINR(demo.fee)}</a>
+        </div>
 
         <div className="mt-10 rounded-3xl bg-signal-50 p-7 md:p-9">
           <p className="text-xl font-semibold text-ink">Included in every plan</p>

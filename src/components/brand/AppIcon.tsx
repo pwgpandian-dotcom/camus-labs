@@ -5,7 +5,7 @@ import { statusLabel } from "@/lib/apps";
 /** Camus app logo: soft blue tile with a two-tone steel-blue glyph. */
 export function AppIcon({ app, className, inverted = false }: { app: Pick<CamusApp, "icon" | "name">; className?: string; inverted?: boolean }) {
   return (
-    <svg viewBox="0 0 40 40" className={cn("h-10 w-10 shrink-0", className)} aria-hidden="true">
+    <svg viewBox="0 0 40 40" width="40" height="40" className={cn("h-10 w-10 shrink-0", className)} aria-hidden="true">
       <rect width="40" height="40" rx="11" fill={inverted ? "#2C6E9E" : "#EAF2F8"} />
       <g transform="translate(9 9) scale(0.9167)" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.1">
         <path d={app.icon[0]} stroke={inverted ? "#FFFFFF" : "#2C6E9E"} />
