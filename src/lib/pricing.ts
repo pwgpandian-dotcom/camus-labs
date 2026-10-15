@@ -29,7 +29,6 @@ export const demo = {
     "Written proposal with scope, timeline and price",
     "Fee adjusted against your setup if you go ahead",
   ],
-  payNote: "Camus guided demo",
 };
 
 export const compare: { feature: string; values: [string, string, string, string] }[] = [
@@ -45,7 +44,7 @@ export const compare: { feature: string; values: [string, string, string, string
 
 export const pricingFaq = [
   { q: "What do I pay for?", a: "Two things: a one-time setup fee to configure the apps for your business, move your data and train your team — and a monthly or yearly subscription." },
-  { q: "Why is the demo paid?", a: "The ₹3,999 demo is a real working session: we load your own products and customers and prepare a written proposal. If you go ahead, the fee is adjusted against your setup." },
+  { q: "Why does the guided demo cost ₹3,999?", a: "It is a real working session: we load your own products and customers and prepare a written proposal. If you go ahead, the fee is adjusted against your setup. Request it on WhatsApp and we'll arrange it with you." },
   { q: "Can I start small and add apps later?", a: "Yes. Start with the apps you need and move to a bigger plan anytime. Your data stays in place." },
   { q: "Do I sign an agreement?", a: "Yes. Scope, price and timeline are written down before we start, so both sides are clear." },
   { q: "What happens to my data if I stop?", a: "You can export all your data. It is yours." },
