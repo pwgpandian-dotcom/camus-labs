@@ -52,6 +52,10 @@ export const metadata: Metadata = {
     siteName: "Camus Labs",
     url: siteUrl,
   },
+  // Google Search Console HTML-tag verification (set in Vercel env).
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } }
+    : {}),
 };
 
 export const viewport: Viewport = {
