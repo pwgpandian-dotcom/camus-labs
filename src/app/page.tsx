@@ -1,28 +1,27 @@
+import type { Metadata } from "next";
 import { PublicChrome } from "@/components/PublicChrome";
-import { Hero } from "@/components/sections/Hero";
-import { WhatWeBuild } from "@/components/sections/WhatWeBuild";
-import { Solutions } from "@/components/sections/Solutions";
-import { Industries } from "@/components/sections/Industries";
-import { HowItWorks } from "@/components/sections/HowItWorks";
-import { FeaturedProjects } from "@/components/sections/FeaturedProjects";
-import { AIAgents } from "@/components/sections/AIAgents";
-import { WhyCamus } from "@/components/sections/WhyCamus";
-import { GlobalReach } from "@/components/sections/GlobalReach";
-import { CTA } from "@/components/sections/CTA";
+import { Hero, Goals, FeaturedApps, PlatformOffers, IndustryGrid, Audiences, HowWeWork, Principles, CustomerStories, FinalCTA } from "@/components/home/HomeSections";
+import { APP_COUNT } from "@/lib/apps";
+
+export const metadata: Metadata = {
+  title: "Camus Labs — One platform to run your entire business",
+  description: `${APP_COUNT} connected apps for billing, ERP, CRM, HR and AI — set up for your industry by our team and supported by the people who built it. Made in Bharat.`,
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (
     <PublicChrome>
       <Hero />
-      <WhatWeBuild />
-      <Solutions />
-      <Industries />
-      <HowItWorks />
-      <FeaturedProjects />
-      <AIAgents />
-      <WhyCamus />
-      <GlobalReach />
-      <CTA />
+      <Goals />
+      <FeaturedApps />
+      <PlatformOffers />
+      <IndustryGrid />
+      <Audiences />
+      <HowWeWork />
+      <Principles />
+      <CustomerStories />
+      <FinalCTA />
     </PublicChrome>
   );
 }

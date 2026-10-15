@@ -30,9 +30,9 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://camus-learn.web.app
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "CAMUS Labs — Technology for Every Idea",
+  title: "Camus Labs — One platform to run your entire business",
   description:
-    "CAMUS Labs designs, builds and launches AI-powered software platforms for businesses, startups, creators and ambitious ideas worldwide.",
+    "Connected business apps for billing, ERP, CRM, HR and AI — set up for your industry by our team and supported by the people who built it. Made in Bharat.",
   applicationName: "Camus Learn",
   appleWebApp: {
     capable: true,
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    siteName: "CAMUS Labs",
+    siteName: "Camus Labs",
     url: siteUrl,
   },
 };

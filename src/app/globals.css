@@ -9,22 +9,26 @@
 :root {
   --color-paper: #ffffff;
   --color-mist: #fafafa;
-  --color-ink: #0a0a0b;
+  --color-ink: #1b2733;
 
   --color-slate-50: #f5f5f6;
   --color-slate-100: #ececed;
   --color-slate-200: #dedee0;
   --color-slate-300: #c3c3c7;
-  --color-slate-400: #9a9aa0;
-  --color-slate-500: #6b6b70;
-  --color-slate-600: #4d4d52;
+  --color-slate-400: #868b94;
+  --color-slate-500: #4f5662;
+  --color-slate-600: #3d4450;
   --color-slate-700: #34343a;
   --color-slate-800: #222226;
   --color-slate-900: #1c1c1f;
 
-  --color-signal: #3b5bff;
-  --color-signal-dark: #2c46e0;
-  --color-signal-50: #eef1ff;
+  --color-signal: #2c6e9e;
+  --color-signal-dark: #235a82;
+  --color-signal-50: #eaf2f8;
+  --color-brand: #3d85b8;
+  --color-mist-blue: #7296ae;
+  --color-cloud: #f3f7fa;
+  --color-navy: #1e2b38;
 
   --color-success: #1f9d6c;
   --color-warning: #b98900;
@@ -60,6 +64,10 @@
   --color-signal: var(--color-signal);
   --color-signal-dark: var(--color-signal-dark);
   --color-signal-50: var(--color-signal-50);
+  --color-brand: var(--color-brand);
+  --color-mist-blue: var(--color-mist-blue);
+  --color-cloud: var(--color-cloud);
+  --color-navy: var(--color-navy);
 
   --color-success: var(--color-success);
   --color-warning: var(--color-warning);
