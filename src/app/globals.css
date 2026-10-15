@@ -192,3 +192,5 @@ html { -webkit-tap-highlight-color: transparent; }
   .no-print { display: none !important; }
   body { background: white; }
 }
+
+@keyframes float-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }

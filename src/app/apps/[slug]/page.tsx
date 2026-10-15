@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { ArrowRight, Check, Minus, MessageCircle, ChevronDown } from "lucide-react";
+import { ArrowRight, Check, Minus, MessageCircle, ChevronDown, CheckCircle2, TrendingUp, AlertCircle } from "lucide-react";
 import { PublicChrome } from "@/components/PublicChrome";
 import { Container } from "@/components/ui/Container";
 import { AppIcon } from "@/components/brand/AppIcon";
@@ -15,6 +15,37 @@ import { hubs } from "@/lib/hubs";
 import { plans, demo, formatINR } from "@/lib/pricing";
 import { demoBookingLink } from "@/lib/site-config";
 import { cn } from "@/lib/cn";
+import { photos, photoUrl, photoForBusiness, categoryPhoto, type PhotoKey } from "@/lib/photos";
+
+const toneIcon = { green: [CheckCircle2, "bg-[#E6F4EE] text-[#1F9D6C]"], blue: [TrendingUp, "bg-[#EAF2F8] text-[#2C6E9E]"], amber: [AlertCircle, "bg-[#FDF3E2] text-[#B87308]"] } as const;
+const floatPos = ["left-3 top-4 lg:-left-10 lg:top-10", "right-3 bottom-24 lg:-right-8 lg:bottom-28", "left-3 bottom-4 lg:left-8 lg:-bottom-6"];
+
+function FloatCard({ f, i }: { f: AppDetail["float"][number]; i: number }) {
+  const [Icon, tone] = toneIcon[f.tone];
+  return (
+    <div className={cn("absolute z-10 w-[220px] rounded-2xl bg-white p-3.5 text-left text-ink shadow-[0_24px_50px_-20px_rgba(10,25,40,0.55)] ring-1 ring-black/5 motion-safe:animate-[float-y_6s_ease-in-out_infinite] sm:w-[250px] sm:p-4", floatPos[i], i === 1 && "[animation-delay:-2s]", i === 2 && "hidden sm:block [animation-delay:-4s]")}>
+      <div className="flex items-start gap-3">
+        <span className={cn("grid h-9 w-9 shrink-0 place-items-center rounded-xl", tone)}><Icon size={19} strokeWidth={2.4} /></span>
+        <div className="min-w-0">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.06em] text-slate-500">{f.label}</p>
+          <p className="mt-0.5 text-[18px] font-semibold leading-tight sm:text-[20px]">{f.value}</p>
+          <p className="mt-0.5 text-[13px] leading-snug text-slate-600">{f.note}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function HeroPhoto({ photo, float }: { photo: PhotoKey; float: AppDetail["float"] }) {
+  return (
+    <div className="relative mx-auto w-full max-w-[560px] lg:mr-0">
+      <div className="absolute -inset-4 rounded-[36px] bg-white/10 ring-1 ring-white/15" aria-hidden="true" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={photoUrl(photo, 1000, 1100)} alt={photos[photo].alt} fetchPriority="high" className="relative aspect-[10/11] w-full rounded-[28px] object-cover" />
+      {float.slice(0, 3).map((f, i) => <FloatCard key={f.label} f={f} i={i} />)}
+    </div>
+  );
+}
 
 /** Screen shown for apps that have no rich detail entry. */
 const screenFor: Record<string, ScreenId> = { leads: "crm", campaigns: "crm", quotes: "invoice", "field-sales": "crm", inbox: "crm", commerce: "pos", loyalty: "pos", pay: "invoice", books: "invoice", expense: "invoice", payroll: "people", attendance: "people", recruit: "people", purchase: "inventory", manufacturing: "inventory", analytics: "dashboard", reports: "dashboard", pharmacy: "inventory", "ai-scribe": "clinic", desk: "stay", "chit-savings": "loan" };
@@ -44,6 +75,11 @@ function fallback(app: CamusApp): AppDetail & { light: true } {
     headline: app.line,
     sub: `Camus ${app.name} runs on the same login and data as every other Camus app — configured for your business and supported by our team.`,
     screen: screenFor[app.slug] ?? "dashboard",
+    photo: categoryPhoto[app.category] ?? "owner",
+    float: [
+      { label: `Camus ${app.name}`, value: statusLabel[app.status], note: app.line, tone: app.status === "live" ? "green" : "blue" },
+      { label: "Set up for you", value: "By our team", note: "Data moved, staff trained", tone: "blue" },
+    ],
     helps: [
       ...feats.slice(0, 4).map((f) => ({ title: f, body: `Included in Camus ${app.name} and connected to the rest of your Camus apps.` })),
       ...(feats.length < 3 ? [
@@ -107,35 +143,41 @@ export default async function AppPage({ params }: PageProps<"/apps/[slug]">) {
         </Container>
       </div>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-[radial-gradient(120%_80%_at_50%_0%,#3D85B8_0%,#2C6E9E_40%,#1C4A6E_100%)] text-white">
-        <svg aria-hidden="true" className="absolute inset-0 h-full w-full opacity-[0.12]" preserveAspectRatio="none">
+      {/* Hero — photo of the business with live Camus cards, then the product screen */}
+      <section className="relative overflow-hidden bg-[radial-gradient(110%_90%_at_80%_0%,#3D85B8_0%,#2C6E9E_42%,#1C4A6E_100%)] text-white">
+        <svg aria-hidden="true" className="absolute inset-0 h-full w-full opacity-[0.10]" preserveAspectRatio="none">
           <defs><pattern id="net" width="56" height="48" patternUnits="userSpaceOnUse"><path d="M0 48 28 0l28 48" fill="none" stroke="white" strokeWidth="1" /><circle cx="28" cy="0" r="2" fill="white" /></pattern></defs>
           <rect width="100%" height="100%" fill="url(#net)" />
         </svg>
-        <div className="absolute inset-x-0 bottom-0 h-[70px] bg-white sm:h-[130px] md:h-[200px] lg:h-[250px]" />
-        <Container className="relative pt-14 text-center md:pt-20">
-          <p className="text-[15px] font-semibold text-slate-200"><Link href="/products" className="hover:text-white">All apps</Link> <span className="text-slate-400">/</span> {app.category}</p>
-          <span className="mt-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-[14px] font-semibold ring-1 ring-white/25">
-            <span className={cn("h-2 w-2 rounded-full", app.status === "live" ? "bg-[#5FD3A0]" : app.status === "ready" ? "bg-[#A9D4F5]" : "bg-slate-300")} />
-            Camus {app.name} · {statusLabel[app.status]}
-          </span>
-          <h1 className="mx-auto mt-6 max-w-[1040px] text-balance text-[40px] font-semibold leading-[1.08] tracking-tight sm:text-[52px] md:text-[64px]">
-            <span className="text-[#CFE6F8]">{lead}</span>{rest.length > 0 && <> {rest.join(" ")}</>}
-          </h1>
-          <p className="mx-auto mt-6 max-w-[780px] text-lg leading-relaxed text-slate-100 md:text-[21px]">{d.sub}</p>
-          <div className="mt-9 flex flex-wrap justify-center gap-3">
-            <a href={demoLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-[17px] font-semibold text-[#1C4A6E] shadow-lg hover:bg-[#EAF2F8]"><MessageCircle size={20} />Request a demo</a>
-            <Link href="/contact" className="rounded-full border border-white/50 px-8 py-4 text-[17px] font-semibold text-white hover:border-white hover:bg-white/10">Talk to our solutions team</Link>
+        <Container className="relative grid grid-cols-1 items-center gap-12 pb-44 pt-12 md:pb-56 md:pt-16 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
+          <div>
+            <p className="text-[15px] font-semibold text-slate-200"><Link href="/products" className="hover:text-white">All apps</Link> <span className="text-slate-400">/</span> {app.category}</p>
+            <span className="mt-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-[14px] font-semibold ring-1 ring-white/25">
+              <span className={cn("h-2 w-2 rounded-full", app.status === "live" ? "bg-[#5FD3A0]" : app.status === "ready" ? "bg-[#A9D4F5]" : "bg-slate-300")} />
+              Camus {app.name} · {statusLabel[app.status]}
+            </span>
+            <h1 className="mt-6 text-balance text-[40px] font-semibold leading-[1.06] tracking-tight sm:text-[50px] xl:text-[60px]">
+              <span className="text-[#CFE6F8]">{lead}</span>{rest.length > 0 && <> {rest.join(" ")}</>}
+            </h1>
+            <p className="mt-6 max-w-[620px] text-lg leading-relaxed text-slate-100 md:text-[20px]">{d.sub}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href={demoLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-[17px] font-semibold text-[#1C4A6E] shadow-lg hover:bg-[#EAF2F8]"><MessageCircle size={20} />Request a demo</a>
+              <Link href="/contact" className="rounded-full border border-white/50 px-8 py-4 text-[17px] font-semibold text-white hover:border-white hover:bg-white/10">Talk to our solutions team</Link>
+            </div>
+            <ul className="mt-7 grid max-w-[560px] grid-cols-2 gap-x-6 gap-y-2.5 text-[15px] font-medium text-slate-100">
+              {["Set up by our team", "GST-ready", "English & Tamil", "Data hosted in India"].map((t) => <li key={t} className="flex items-center gap-2"><Check size={17} className="text-[#A9D4F5]" strokeWidth={3} />{t}</li>)}
+            </ul>
+            {app.status === "request" && <p className="mt-6 max-w-[600px] rounded-2xl bg-white/10 px-5 py-3 text-[15px] text-slate-100 ring-1 ring-white/20">This app is designed and built when a customer signs up — tell us your needs and we&apos;ll share the scope, timeline and price.</p>}
           </div>
-          <ul className="mt-7 flex flex-wrap justify-center gap-x-6 gap-y-2 text-[15px] font-medium text-slate-100">
-            {["Set up by our team", "GST-ready", "English & Tamil", "Data hosted in India"].map((t) => <li key={t} className="flex items-center gap-1.5"><Check size={17} className="text-[#A9D4F5]" strokeWidth={3} />{t}</li>)}
-          </ul>
-          {app.status === "request" && <p className="mx-auto mt-5 max-w-[680px] rounded-2xl bg-white/10 px-5 py-3 text-[15px] text-slate-100 ring-1 ring-white/20">This app is designed and built when a customer signs up — tell us your needs and we&apos;ll share the scope, timeline and price.</p>}
-          <div className="relative mx-auto mt-12 max-w-[1120px] md:mt-14">
-            <ScreenFrame id={d.screen} className="shadow-[0_40px_100px_-30px_rgba(10,25,40,0.6)]" />
+          <HeroPhoto photo={d.photo} float={d.float} />
+        </Container>
+      </section>
+      <section className="relative z-10 -mt-36 md:-mt-44">
+        <Container>
+          <div className="mx-auto max-w-[1120px]">
+            <ScreenFrame id={d.screen} className="shadow-[0_40px_100px_-30px_rgba(10,25,40,0.55)]" />
+            <p className="mt-3 text-center text-sm text-slate-500">Camus {app.name} · sample data shown for illustration.</p>
           </div>
-          <p className="relative mt-3 text-sm text-slate-500">Sample data shown for illustration.</p>
         </Container>
       </section>
 
@@ -232,15 +274,21 @@ export default async function AppPage({ params }: PageProps<"/apps/[slug]">) {
             <SectionHead eyebrow="Who it's for" title={`Built for businesses like yours`} />
             <ul className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {d.forWho.map((w) => {
+                const key = photoForBusiness(w.name);
                 const inner = (
                   <>
-                    <h3 className="text-[20px] font-semibold text-ink">{w.name}</h3>
-                    <p className="mt-2 flex-1 text-[16px] leading-relaxed text-slate-600">{w.line}</p>
-                    {w.hub && <span className="mt-5 inline-flex items-center gap-1 text-[15px] font-semibold text-signal">Camus for {hubs.find((h) => h.slug === w.hub)?.name} <ArrowRight size={16} /></span>}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={photoUrl(key, 720, 520)} alt={photos[key].alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" />
+                    <span className="absolute inset-0 bg-gradient-to-t from-[#0E2233]/90 via-[#0E2233]/45 to-transparent" />
+                    <span className="relative mt-auto block p-6">
+                      <span className="block text-[22px] font-semibold text-white">{w.name}</span>
+                      <span className="mt-1.5 block text-[15px] leading-relaxed text-slate-200">{w.line}</span>
+                      {w.hub && <span className="mt-3 inline-flex items-center gap-1 text-[15px] font-semibold text-[#A9D4F5]">Camus for {hubs.find((h) => h.slug === w.hub)?.name} <ArrowRight size={16} /></span>}
+                    </span>
                   </>
                 );
-                const cls = "flex h-full flex-col rounded-[22px] border border-slate-200 bg-gradient-to-br from-white to-cloud p-7";
-                return <li key={w.name}>{w.hub ? <Link href={`/for/${w.hub}`} className={cn(cls, "hover:border-signal")}>{inner}</Link> : <div className={cls}>{inner}</div>}</li>;
+                const cls = "group relative flex h-[320px] flex-col overflow-hidden rounded-[24px] bg-navy";
+                return <li key={w.name}>{w.hub ? <Link href={`/for/${w.hub}`} className={cls}>{inner}</Link> : <div className={cls}>{inner}</div>}</li>;
               })}
             </ul>
           </Container>

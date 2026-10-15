@@ -6,12 +6,17 @@
  * promises numbers we cannot show (no invented "% faster" stats).
  */
 import type { ScreenId } from "@/components/product/ProductScreens";
+import type { PhotoKey } from "./photos";
 
 export interface AppDetail {
   /** Outcome-first headline for the hero. */
   headline: string;
   sub: string;
   screen: ScreenId;
+  /** Hero photograph. */
+  photo: PhotoKey;
+  /** Small live cards floated over the hero photo. tone: green | blue | amber */
+  float: { label: string; value: string; note: string; tone: "green" | "blue" | "amber" }[];
   /** "How it helps you" — outcomes, not features. */
   helps: { title: string; body: string }[];
   /** Tabbed feature explorer. */
@@ -38,6 +43,8 @@ export const appDetails: Record<string, AppDetail> = {
     headline: "Bill faster at the counter. Know every rupee by closing time.",
     sub: "Camus POS gives your cashiers quick barcode billing and gives you live sales, stock and cash across every counter and branch — on one connected platform.",
     screen: "pos",
+    photo: "counter",
+    float: [{ label: "UPI received", value: "₹1,250", note: "Bill #2042 sent on WhatsApp", tone: "green" }, { label: "Today's sales", value: "₹48,250", note: "+12% vs last Thursday", tone: "blue" }, { label: "Low stock", value: "Toor Dal 1kg", note: "Reorder 120 units", tone: "amber" }],
     helps: [
       { title: "Shorter queues", body: "Scan, search or tap quick keys. UPI, cash, card and split payments close a bill in seconds." },
       { title: "No more stock surprises", body: "Every sale reduces stock instantly, so low-stock alerts reach you before the shelf is empty." },
@@ -93,6 +100,8 @@ export const appDetails: Record<string, AppDetail> = {
     headline: "From order to kitchen to bill — without the chaos.",
     sub: "Camus Restaurant POS connects your tables, KOTs, kitchen display, menu and stock, so service stays fast on the busiest night.",
     screen: "restaurant",
+    photo: "restaurant",
+    float: [{ label: "KOT #212 · Table 6", value: "Sent to kitchen", note: "4 items · less spicy", tone: "blue" }, { label: "Table 4", value: "Bill ₹1,071 paid", note: "UPI · 2 guests", tone: "green" }, { label: "Kitchen queue", value: "3 orders", note: "Avg. 12 min to serve", tone: "amber" }],
     helps: [
       { title: "Faster table turns", body: "See every table's status at a glance and move from order to bill without walking to the counter." },
       { title: "No missed orders", body: "KOTs go straight to the kitchen display with notes, so nothing is lost on paper." },
@@ -144,6 +153,8 @@ export const appDetails: Record<string, AppDetail> = {
     headline: "GST invoices in minutes. Payments collected on time.",
     sub: "Camus Billing creates professional GST invoices, sends them with a UPI payment link on WhatsApp, and follows up until you are paid.",
     screen: "invoice",
+    photo: "owner",
+    float: [{ label: "Payment received", value: "₹42,300", note: "KVR Jewellers · UPI", tone: "green" }, { label: "Invoice INV-0412", value: "₹8,560", note: "Reminder sent on WhatsApp", tone: "blue" }, { label: "Overdue", value: "₹84,000", note: "6 customers > 30 days", tone: "amber" }],
     helps: [
       { title: "Get paid faster", body: "Every invoice carries a UPI QR and payment link, with automatic reminders before and after the due date." },
       { title: "Stay GST-ready", body: "CGST, SGST and IGST calculated by place of supply, with HSN codes and a ready sales register." },
@@ -192,6 +203,8 @@ export const appDetails: Record<string, AppDetail> = {
     headline: "Never run out. Never over-order.",
     sub: "Camus Inventory tracks stock across stores and warehouses, warns you before items run out, and turns reorder suggestions into purchase orders.",
     screen: "inventory",
+    photo: "warehouse",
+    float: [{ label: "Stock value", value: "₹18.4L", note: "3 locations", tone: "blue" }, { label: "Reorder suggested", value: "7 items", note: "Purchase orders ready", tone: "amber" }, { label: "Transfer received", value: "120 units", note: "Warehouse → T. Nagar", tone: "green" }],
     helps: [
       { title: "Fewer stock-outs", body: "Reorder points and alerts based on your sales mean popular items stay on the shelf." },
       { title: "Less cash stuck in stock", body: "Spot slow movers and overstock, and stop buying what doesn't sell." },
@@ -241,6 +254,8 @@ export const appDetails: Record<string, AppDetail> = {
     headline: "Every enquiry followed up. Every deal visible.",
     sub: "Camus CRM brings leads from your website, WhatsApp and calls into one pipeline, reminds your team to follow up, and shows you what will close this month.",
     screen: "crm",
+    photo: "exec",
+    float: [{ label: "New enquiry", value: "Velan Supermarket", note: "From website · assigned to Priya", tone: "blue" }, { label: "Follow-ups today", value: "12 calls", note: "3 overdue", tone: "amber" }, { label: "Deal won", value: "₹1.5L", note: "Lotus Pharmacy", tone: "green" }],
     helps: [
       { title: "No lead forgotten", body: "Enquiries from every channel land in one list with an owner and a next step." },
       { title: "Follow-ups on time", body: "Reminders tell each salesperson who to call today." },
@@ -288,6 +303,8 @@ export const appDetails: Record<string, AppDetail> = {
     headline: "Purchase, stock, production and accounts — finally connected.",
     sub: "Camus ERP replaces disconnected software and spreadsheets with one system for operations, set up around how your business already works.",
     screen: "dashboard",
+    photo: "factory",
+    float: [{ label: "Production order", value: "PO-118", note: "On schedule · 640 units", tone: "blue" }, { label: "Purchase approved", value: "₹2.4L", note: "Approved by Plant head", tone: "green" }, { label: "Raw material low", value: "Steel rods", note: "Below reorder level", tone: "amber" }],
     helps: [
       { title: "One version of the truth", body: "Sales, purchase, stock and accounts share the same data — no re-entry between departments." },
       { title: "Approvals with control", body: "Purchase, discount and payment approvals follow your rules." },
@@ -338,6 +355,8 @@ export const appDetails: Record<string, AppDetail> = {
     headline: "A calmer front desk. Organised patient flow.",
     sub: "Camus Clinic handles registration, appointments, token queues, prescriptions and billing — so doctors spend time with patients, not paperwork.",
     screen: "clinic",
+    photo: "clinic",
+    float: [{ label: "Now serving", value: "Token 14", note: "Dr. Meena · Room 2", tone: "blue" }, { label: "Reminders sent", value: "24 today", note: "For tomorrow's appointments", tone: "green" }, { label: "Waiting", value: "6 patients", note: "~15 min average", tone: "amber" }],
     helps: [
       { title: "Shorter waiting", body: "Appointments and tokens keep the waiting room organised and patients informed." },
       { title: "Fewer no-shows", body: "WhatsApp reminders before every appointment." },
@@ -385,6 +404,8 @@ export const appDetails: Record<string, AppDetail> = {
     headline: "Your team, organised — from joining day to payslip.",
     sub: "Camus People keeps employee records, attendance, leave and payroll in one place, with self-service for your staff.",
     screen: "people",
+    photo: "office",
+    float: [{ label: "Present today", value: "36 of 42", note: "86% attendance", tone: "green" }, { label: "Leave request", value: "Divya K.", note: "18–19 Oct · Approve?", tone: "amber" }, { label: "Payroll", value: "₹7.84L", note: "Payslips ready 31 Oct", tone: "blue" }],
     helps: [
       { title: "Attendance you can trust", body: "Check-ins by branch and shift, with late and absent marked automatically." },
       { title: "Leave without paperwork", body: "Staff request leave on their phone and managers approve in a tap." },
@@ -429,6 +450,8 @@ export const appDetails: Record<string, AppDetail> = {
     headline: "Let customers book. Let reminders bring them in.",
     sub: "Camus Bookings gives customers a simple way to book slots and reminds them before every visit — for clinics, salons, studios and service businesses.",
     screen: "clinic",
+    photo: "dentist",
+    float: [{ label: "New booking", value: "11:00 AM", note: "Booked online · Teeth cleaning", tone: "blue" }, { label: "Reminder sent", value: "WhatsApp", note: "Tomorrow's 18 appointments", tone: "green" }, { label: "Slots left today", value: "4", note: "Dr. Arjun", tone: "amber" }],
     helps: [
       { title: "Bookings around the clock", body: "Customers book from your website or WhatsApp link, any time." },
       { title: "Fewer no-shows", body: "Automatic reminders before every appointment." },
@@ -465,6 +488,8 @@ export const appDetails: Record<string, AppDetail> = {
     headline: "Every bed, rent and complaint — in one place.",
     sub: "Camus Stay runs PGs, hostels and co-living: rooms and beds, resident onboarding, rent and dues, and complaints tracked to closure.",
     screen: "stay",
+    photo: "hostel",
+    float: [{ label: "Occupancy", value: "82%", note: "18 of 22 beds", tone: "blue" }, { label: "Rent received", value: "₹9,500", note: "Karthik · Room 101-C", tone: "green" }, { label: "Complaint", value: "Geyser · Room 103", note: "Assigned to maintenance", tone: "amber" }],
     helps: [
       { title: "Occupancy at a glance", body: "See which beds are occupied, vacant or due, room by room." },
       { title: "Rent collected on time", body: "Dues tracked per resident with WhatsApp reminders." },
@@ -502,6 +527,8 @@ export const appDetails: Record<string, AppDetail> = {
     headline: "Pledges, interest and receipts — accurate every time.",
     sub: "Camus Gold Loan manages customer KYC, pledges by weight and purity, interest, renewals, receipts and overdue follow-up for pawn brokers and gold-loan lenders.",
     screen: "loan",
+    photo: "jewel2",
+    float: [{ label: "New pledge", value: "₹1,75,000", note: "38.2 g · 22K", tone: "blue" }, { label: "Interest collected", value: "₹8,400", note: "Receipt printed", tone: "green" }, { label: "Overdue", value: "27 pledges", note: "Reminders sent", tone: "amber" }],
     helps: [
       { title: "Interest calculated right", body: "Interest computed consistently on every pledge — no manual errors." },
       { title: "Overdues under control", body: "See overdue pledges and follow up before they become a problem." },
@@ -540,6 +567,8 @@ export const appDetails: Record<string, AppDetail> = {
     headline: "Stock by weight and purity. Sales with GST.",
     sub: "Camus Jewel tracks every piece by weight and purity, prices sales from the day's gold rate, and handles making charges, old-gold exchange and schemes.",
     screen: "inventory",
+    photo: "jewel",
+    float: [{ label: "Today's rate", value: "₹6,850/g", note: "22K gold", tone: "blue" }, { label: "Sale with exchange", value: "₹1,42,300", note: "Old gold 8.2 g adjusted", tone: "green" }, { label: "Stock value", value: "₹2.6 Cr", note: "Updated with today's rate", tone: "amber" }],
     helps: [
       { title: "Every gram accounted for", body: "Stock tracked piece by piece with weight, purity and status." },
       { title: "Consistent pricing", body: "Set the day's rate once and every sale is priced the same way." },
