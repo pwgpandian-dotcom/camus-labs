@@ -272,7 +272,7 @@ export default async function AppPage({ params }: PageProps<"/apps/[slug]">) {
         <section id="industries" className="scroll-mt-[140px]">
           <Container className="py-20 md:py-24">
             <SectionHead eyebrow="Who it's for" title={`Built for businesses like yours`} />
-            <ul className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className={cn("mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2", d.forWho.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3")}>
               {d.forWho.map((w) => {
                 const key = photoForBusiness(w.name);
                 const inner = (

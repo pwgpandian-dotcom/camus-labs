@@ -102,7 +102,7 @@ function Dashboard() {
 }
 
 function POS() {
-  const items: [string, string, string][] = [["Basmati Rice 5kg", "₹645", "#E9D8B8"], ["Toor Dal 1kg", "₹168", "#F2D46B"], ["Fresh Milk 1L", "₹62", "#DCEBF7"], ["Sunflower Oil 1L", "₹155", "#F5E3A1"], ["Filter Coffee 500g", "₹290", "#B78E6B"], ["Wheat Atta 5kg", "₹265", "#E8DCC7"], ["Biscuits Pack", "₹40", "#F0C9A5"], ["Green Tea 100g", "₹199", "#BFE0C4"]];
+  const items: [string, string, string, string][] = [["Basmati Rice 5kg", "₹645", "#F4ECDD", "🍚"], ["Toor Dal 1kg", "₹168", "#FBF1CF", "🫘"], ["Fresh Milk 1L", "₹62", "#E7F1FA", "🥛"], ["Sunflower Oil 1L", "₹155", "#FBF3D6", "🫙"], ["Filter Coffee 500g", "₹290", "#F1E4D8", "☕"], ["Wheat Atta 5kg", "₹265", "#F3ECE1", "🌾"], ["Biscuits Pack", "₹40", "#FBEADB", "🍪"], ["Green Tea 100g", "₹199", "#E3F2E5", "🍵"]];
   return (
     <Shell id="pos" title="New bill" sub="Cashier: Ravi · Bill #INV-2042" actions={<><Btn>Counter 1 · Anna Nagar ▾</Btn><span className="h-9 w-9 rounded-full bg-[#3D85B8]" /></>}>
       <div className="flex flex-1 gap-5 px-7 py-6">
@@ -110,8 +110,8 @@ function POS() {
           <span className="rounded-xl border-[1.5px] border-[#3D85B8] bg-white px-4 py-3 text-[15px] text-[#868B94]">Scan barcode or search item…</span>
           <div className="flex gap-2">{["All", "Groceries", "Dairy", "Snacks", "Beverages", "Personal care"].map((c, i) => <span key={c} className={cn("rounded-full px-3.5 py-1.5 text-[13px] font-semibold", i === 0 ? "bg-[#2C6E9E] text-white" : "border border-[#E5E9EF] bg-white text-[#4F5662]")}>{c}</span>)}</div>
           <div className="grid grid-cols-4 gap-3">
-            {items.map(([n, p, c]) => (
-              <div key={n} className="flex flex-col gap-2 rounded-xl border border-[#E5E9EF] bg-white p-3"><div className="h-16 rounded-lg" style={{ background: c }} /><span className="text-[13px] font-semibold">{n}</span><span className="text-[14px] font-semibold text-[#2C6E9E]">{p}</span></div>
+            {items.map(([n, p, c, e]) => (
+              <div key={n} className="flex flex-col gap-2 rounded-xl border border-[#E5E9EF] bg-white p-3"><div className="grid h-16 place-items-center rounded-lg text-[34px]" style={{ background: c }}>{e}</div><span className="text-[13px] font-semibold">{n}</span><span className="text-[14px] font-semibold text-[#2C6E9E]">{p}</span></div>
             ))}
           </div>
         </div>

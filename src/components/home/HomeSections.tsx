@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { photos, photoUrl, type PhotoKey } from "@/lib/photos";
 import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { AppIcon } from "@/components/brand/AppIcon";
@@ -52,7 +53,7 @@ export function Hero() {
           Opening a new business? <Link href="/for/startups" className="font-semibold text-signal-dark hover:text-ink">Get your systems ready from day one →</Link>
         </p>
         <div className="mt-14 w-full max-w-[1120px]">
-          <ProductShowcase />
+          <ProductShowcase ids={["dashboard", "pos", "restaurant", "invoice", "inventory", "crm", "clinic"]} />
         </div>
       </Container>
     </section>
@@ -142,25 +143,32 @@ export function PlatformOffers() {
   );
 }
 
+const hubPhoto: Record<string, PhotoKey> = { healthcare: "clinic", retail: "aisle", hospitality: "restaurant", finance: "jewel2", education: "owner", "real-estate": "exec", manufacturing: "factory", government: "office" };
+
 export function IndustryGrid() {
   const list = hubs.filter((h) => h.kind === "industry");
   return (
     <section className="bg-cloud">
       <Container className="py-20 md:py-24">
         <SectionHead eyebrow="Solutions" title="Built for your industry" sub="The same platform, pre-configured with the workflows and reports your industry needs." />
-        <ul className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {list.map((h) => (
-            <li key={h.slug}>
-              <Link href={`/for/${h.slug}`} className="group flex h-full items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition-all hover:border-signal hover:shadow-md">
-                <AppIcon app={getApp(h.iconApp)!} className="h-11 w-11" />
-                <span>
-                  <span className="block text-sm font-semibold text-slate-500">Camus for</span>
-                  <span className="block text-lg font-semibold text-ink">{h.name}</span>
-                  <span className="mt-1 block text-[15px] leading-snug text-slate-600">{h.line}</span>
-                </span>
-              </Link>
-            </li>
-          ))}
+        <ul className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {list.map((h) => {
+            const key = hubPhoto[h.slug] ?? "owner";
+            return (
+              <li key={h.slug}>
+                <Link href={`/for/${h.slug}`} className="group relative flex h-[300px] flex-col overflow-hidden rounded-[24px] bg-navy">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={photoUrl(key, 640, 600)} alt={photos[key].alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" />
+                  <span className="absolute inset-0 bg-gradient-to-t from-[#0E2233]/90 via-[#0E2233]/40 to-transparent" />
+                  <span className="relative mt-auto block p-6">
+                    <span className="block text-sm font-semibold text-[#A9D4F5]">Camus for</span>
+                    <span className="block text-[22px] font-semibold text-white">{h.name}</span>
+                    <span className="mt-1 block text-[15px] leading-snug text-slate-200">{h.line}</span>
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </Container>
     </section>
