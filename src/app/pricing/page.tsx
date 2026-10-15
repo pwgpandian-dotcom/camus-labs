@@ -7,7 +7,7 @@ import { NetworkMark } from "@/components/brand/Logo";
 import { AppIcon } from "@/components/brand/AppIcon";
 import { FinalCTA } from "@/components/home/HomeSections";
 import { compare, demo, formatINR, plans, pricingFaq } from "@/lib/pricing";
-import { whatsappLink } from "@/lib/site-config";
+import { demoBookingLink, siteConfig } from "@/lib/site-config";
 import { apps } from "@/lib/apps";
 import { cn } from "@/lib/cn";
 
@@ -66,7 +66,10 @@ export default function PricingPage() {
               {demo.points.map((x) => <li key={x} className="flex gap-2.5 text-base font-medium text-slate-100"><Check size={20} className="shrink-0 text-[#9CC3E0]" />{x}</li>)}
             </ul>
           </div>
-          <a href={whatsappLink(`Hi Camus Labs, I'd like to book the ${formatINR(demo.fee)} guided demo for my business.`)} target="_blank" rel="noopener noreferrer" className="rounded-full bg-brand px-8 py-4 text-center text-base font-semibold text-white hover:bg-signal">Book a demo · {formatINR(demo.fee)}</a>
+          <div className="flex flex-col items-center gap-2">
+            <a href={demoBookingLink(`Hi Camus Labs, I'd like to book the ${formatINR(demo.fee)} guided demo for my business.`)} target="_blank" rel="noopener noreferrer" className="rounded-full bg-brand px-8 py-4 text-center text-base font-semibold text-white hover:bg-signal">{siteConfig.demoPaymentUrl ? `Pay ${formatINR(demo.fee)} & book demo` : `Book a demo · ${formatINR(demo.fee)}`}</a>
+            {siteConfig.demoPaymentUrl && <span className="text-sm text-slate-300">Secure payment by Razorpay · UPI, cards, netbanking</span>}
+          </div>
         </div>
 
         <div className="mt-10 rounded-3xl bg-signal-50 p-7 md:p-9">

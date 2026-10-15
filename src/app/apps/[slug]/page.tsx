@@ -8,7 +8,7 @@ import { AppIcon, StatusPill } from "@/components/brand/AppIcon";
 import { FinalCTA } from "@/components/home/HomeSections";
 import { apps, appHref, getApp } from "@/lib/apps";
 import { hubs } from "@/lib/hubs";
-import { whatsappLink } from "@/lib/site-config";
+import { demoBookingLink } from "@/lib/site-config";
 import { demo as demoInfo, formatINR } from "@/lib/pricing";
 
 export function generateStaticParams() {
@@ -36,7 +36,7 @@ export default async function AppPage({ params }: PageProps<"/apps/[slug]">) {
 
   const related = apps.filter((a) => a.category === app.category && a.slug !== app.slug).slice(0, 3);
   const usedIn = hubs.filter((h) => h.apps.includes(app.slug));
-  const demo = whatsappLink(`Hi Camus Labs, I'd like to book the ${formatINR(demoInfo.fee)} guided demo of Camus ${app.name}.`);
+  const demo = demoBookingLink(`Hi Camus Labs, I'd like to book the ${formatINR(demoInfo.fee)} guided demo of Camus ${app.name}.`);
   const isStudio = app.slug === "studio";
 
   return (
