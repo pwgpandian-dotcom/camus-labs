@@ -10,9 +10,10 @@ export const siteConfig = {
   // No LinkedIn link yet — add here once available and it'll appear
   // automatically in the Footer and Contact page.
   linkedinUrl: "",
-  // Razorpay Payment Page / Payment Link for the paid guided demo
-  // (e.g. "https://rzp.io/rzp/xxxx"). Empty = the demo button opens WhatsApp.
-  demoPaymentUrl: process.env.NEXT_PUBLIC_DEMO_PAYMENT_URL || "",
+  // UPI ID that receives the paid guided-demo fee (e.g. "camuslabs@okicici").
+  // Empty = the /demo page asks visitors to book on WhatsApp instead.
+  upiId: process.env.NEXT_PUBLIC_UPI_ID || "",
+  upiPayeeName: process.env.NEXT_PUBLIC_UPI_PAYEE_NAME || "Camus Labs",
 };
 
 export function whatsappLink(prefilledMessage?: string) {
@@ -22,7 +23,13 @@ export function whatsappLink(prefilledMessage?: string) {
     : base;
 }
 
-/** Where "Book a demo" should go: Razorpay payment page if set, else WhatsApp. */
-export function demoBookingLink(message: string) {
-  return siteConfig.demoPaymentUrl || whatsappLink(message);
+/** Where "Book a demo" goes: the /demo page (UPI payment + WhatsApp confirmation). */
+export function demoBookingLink(app?: string) {
+  return app ? `/demo?app=${encodeURIComponent(app)}` : "/demo";
+}
+
+/** Standard UPI deep link — opens GPay / PhonePe / Paytm / BHIM on phones. */
+export function upiLink(amount: number, note: string) {
+  const q = new URLSearchParams({ pa: siteConfig.upiId, pn: siteConfig.upiPayeeName, am: amount.toFixed(2), cu: "INR", tn: note });
+  return `upi://pay?${q.toString()}`;
 }

@@ -29,6 +29,7 @@ export const demo = {
     "Written proposal with scope, timeline and price",
     "Fee adjusted against your setup if you go ahead",
   ],
+  payNote: "Camus guided demo",
 };
 
 export const compare: { feature: string; values: [string, string, string, string] }[] = [

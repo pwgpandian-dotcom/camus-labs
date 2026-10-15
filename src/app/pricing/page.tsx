@@ -7,7 +7,7 @@ import { NetworkMark } from "@/components/brand/Logo";
 import { AppIcon } from "@/components/brand/AppIcon";
 import { FinalCTA } from "@/components/home/HomeSections";
 import { compare, demo, formatINR, plans, pricingFaq } from "@/lib/pricing";
-import { demoBookingLink, siteConfig } from "@/lib/site-config";
+import { demoBookingLink } from "@/lib/site-config";
 import { apps } from "@/lib/apps";
 import { cn } from "@/lib/cn";
 
@@ -49,7 +49,7 @@ export default function PricingPage() {
               </p>
               <p className="text-sm font-medium text-slate-600">{p.monthly != null ? "+ one-time setup by our team" : "+ one-time setup, quoted for your business"}</p>
               <Link href="/contact" className={cn("rounded-full px-5 py-3 text-center text-base font-semibold", p.popular || p.monthly != null ? "bg-signal text-white hover:bg-signal-dark" : "border border-slate-300 text-ink hover:border-signal")}>{p.monthly != null ? "Get started" : "Talk to sales"}</Link>
-              <a href="#demo" className="-mt-1 text-center text-[15px] font-semibold text-signal-dark hover:text-ink">Request a demo</a>
+              <Link href={demoBookingLink()} className="-mt-1 text-center text-[15px] font-semibold text-signal-dark hover:text-ink">Request a demo</Link>
               <ul className="mt-1 grid gap-2.5 border-t border-slate-200 pt-5">
                 {p.limits.map((l) => <li key={l} className="flex gap-2.5 text-[15px] font-medium text-slate-800"><Check size={19} className="shrink-0 text-signal" />{l}</li>)}
               </ul>
@@ -67,8 +67,8 @@ export default function PricingPage() {
             </ul>
           </div>
           <div className="flex flex-col items-center gap-2">
-            <a href={demoBookingLink(`Hi Camus Labs, I'd like to book the ${formatINR(demo.fee)} guided demo for my business.`)} target="_blank" rel="noopener noreferrer" className="rounded-full bg-brand px-8 py-4 text-center text-base font-semibold text-white hover:bg-signal">{siteConfig.demoPaymentUrl ? `Pay ${formatINR(demo.fee)} & book demo` : `Book a demo · ${formatINR(demo.fee)}`}</a>
-            {siteConfig.demoPaymentUrl && <span className="text-sm text-slate-300">Secure payment by Razorpay · UPI, cards, netbanking</span>}
+            <Link href={demoBookingLink()} className="rounded-full bg-brand px-8 py-4 text-center text-base font-semibold text-white hover:bg-signal">Book a demo · {formatINR(demo.fee)}</Link>
+            <span className="text-sm text-slate-300">Pay by UPI — GPay, PhonePe, Paytm, BHIM</span>
           </div>
         </div>
 
