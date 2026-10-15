@@ -8,6 +8,10 @@ import { AppIcon, StatusPill } from "@/components/brand/AppIcon";
 import { FinalCTA } from "@/components/home/HomeSections";
 import { apps, appHref, getApp } from "@/lib/apps";
 import { hubs } from "@/lib/hubs";
+import { ScreenFrame } from "@/components/product/ScreenFrame";
+import type { ScreenId } from "@/components/product/ProductScreens";
+
+const screenFor: Record<string, ScreenId> = { crm: "crm", leads: "crm", campaigns: "crm", quotes: "crm", "field-sales": "crm", inbox: "crm", pos: "pos", commerce: "pos", loyalty: "pos", billing: "dashboard", pay: "dashboard", inventory: "dashboard", erp: "dashboard", analytics: "dashboard", reports: "dashboard", purchase: "dashboard", bookings: "clinic", pharmacy: "clinic", "ai-scribe": "clinic" };
 import { demoBookingLink } from "@/lib/site-config";
 
 export function generateStaticParams() {
@@ -59,6 +63,7 @@ export default async function AppPage({ params }: PageProps<"/apps/[slug]">) {
             <Link href="/contact" className="rounded-full bg-signal px-7 py-4 text-base font-semibold text-white hover:bg-signal-dark">{isStudio ? "Share your requirement" : "Talk to our solutions team"}</Link>
             <a href={demo} target="_blank" rel="noopener noreferrer" className="rounded-full border border-slate-300 bg-white px-7 py-4 text-base font-semibold text-ink hover:border-signal">Request a demo</a>
           </div>
+          {screenFor[app.slug] && <div className="mt-12 max-w-[1080px]"><ScreenFrame id={screenFor[app.slug]} /><p className="mt-3 text-sm text-slate-500">Sample data shown for illustration.</p></div>}
         </Container>
       </section>
 

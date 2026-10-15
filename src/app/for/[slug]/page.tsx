@@ -8,6 +8,7 @@ import { AppIcon, StatusPill } from "@/components/brand/AppIcon";
 import { FinalCTA } from "@/components/home/HomeSections";
 import { appHref, getApp, type CamusApp } from "@/lib/apps";
 import { getHub, hubs } from "@/lib/hubs";
+import { ScreenFrame } from "@/components/product/ScreenFrame";
 
 export function generateStaticParams() {
   return hubs.map((h) => ({ slug: h.slug }));
@@ -67,6 +68,7 @@ export default async function HubPage({ params }: PageProps<"/for/[slug]">) {
             <Link href="/contact" className="rounded-full bg-signal px-7 py-4 text-base font-semibold text-white hover:bg-signal-dark">Get in touch</Link>
             <a href="#apps" className="rounded-full border border-slate-300 bg-white px-7 py-4 text-base font-semibold text-ink hover:border-signal">Explore the apps</a>
           </div>
+          {hub.screen && <div className="mt-14 w-full max-w-[1080px]"><ScreenFrame id={hub.screen} /><p className="mt-3 text-sm text-slate-500">Sample data shown for illustration.</p></div>}
         </Container>
       </section>
 

@@ -6,6 +6,7 @@ import { NetworkMark } from "@/components/brand/Logo";
 import { APP_COUNT, appHref, getApp, goals, type CamusApp } from "@/lib/apps";
 import { hubs } from "@/lib/hubs";
 import { createClient } from "@/lib/supabase/server";
+import { ProductShowcase } from "@/components/product/ScreenFrame";
 
 const pick = (slugs: string[]) => slugs.map(getApp).filter(Boolean) as CamusApp[];
 
@@ -31,7 +32,6 @@ function SectionHead({ eyebrow, title, sub, action }: { eyebrow?: string; title:
 }
 
 export function Hero() {
-  const strip = pick(["crm", "billing", "pos", "inventory", "erp", "people", "payroll", "desk", "bookings", "commerce", "sites", "analytics", "ai-agents"]);
   return (
     <section className="bg-cloud">
       <Container className="flex flex-col items-center py-20 text-center md:py-28">
@@ -51,16 +51,9 @@ export function Hero() {
         <p className="mt-6 text-base text-slate-600">
           Opening a new business? <Link href="/for/startups" className="font-semibold text-signal-dark hover:text-ink">Get your systems ready from day one →</Link>
         </p>
-        <ul className="mt-14 flex w-full max-w-[1100px] flex-wrap justify-center gap-x-3 gap-y-6 rounded-3xl border border-[#D6E3EE] bg-white p-6 shadow-md md:p-8">
-          {strip.map((a) => (
-            <li key={a.slug} className="w-[66px]">
-              <Link href={appHref(a)} className="group flex flex-col items-center gap-2">
-                <AppIcon app={a} className="h-11 w-11 transition-transform group-hover:-translate-y-0.5" />
-                <span className="text-[13px] font-semibold text-slate-700">{a.name}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-14 w-full max-w-[1120px]">
+          <ProductShowcase />
+        </div>
       </Container>
     </section>
   );

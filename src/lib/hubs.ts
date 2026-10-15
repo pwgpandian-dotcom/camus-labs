@@ -4,6 +4,7 @@
  * ship with hero + apps + FAQ and grow later.
  */
 import type { AppStatus } from "./apps";
+import type { ScreenId } from "@/components/product/ProductScreens";
 
 export interface Hub {
   slug: string;
@@ -13,6 +14,8 @@ export interface Hub {
   line: string;
   /** App slug whose icon represents this hub in menus. */
   iconApp: string;
+  /** Product screen shown in the hero. */
+  screen?: ScreenId;
   hero: { title: string; sub: string };
   apps: string[];
   segments?: { name: string; line: string }[];
@@ -32,7 +35,7 @@ const commonFaq = (name: string) => [
 
 export const hubs: Hub[] = [
   {
-    slug: "healthcare", name: "Healthcare", kind: "industry", iconApp: "clinic",
+    slug: "healthcare", screen: "clinic", name: "Healthcare", kind: "industry", iconApp: "clinic",
     line: "Clinics, pharmacies and diagnostics",
     hero: { title: "Camus for Healthcare", sub: "Patients, appointments, billing, pharmacy and staff on one secure platform — configured for your clinic or hospital by our team." },
     apps: ["clinic", "bookings", "crm", "billing", "pharmacy", "ai-scribe", "people", "analytics"],
@@ -47,7 +50,7 @@ export const hubs: Hub[] = [
     faq: commonFaq("Healthcare"),
   },
   {
-    slug: "retail", name: "Retail", kind: "industry", iconApp: "pos",
+    slug: "retail", screen: "pos", name: "Retail", kind: "industry", iconApp: "pos",
     line: "Stores, chains and distributors",
     hero: { title: "Camus for Retail", sub: "Point of sale, inventory, retail ERP, payments, loyalty and your online store — connected, and configured for your stores by our team." },
     apps: ["pos", "inventory", "erp", "pay", "crm", "commerce", "loyalty", "reviews"],
@@ -74,7 +77,7 @@ export const hubs: Hub[] = [
     ],
   },
   {
-    slug: "hospitality", name: "Hospitality", kind: "industry", iconApp: "restaurant-pos",
+    slug: "hospitality", screen: "pos", name: "Hospitality", kind: "industry", iconApp: "restaurant-pos",
     line: "Restaurants, hotels, PG and co-living",
     hero: { title: "Camus for Hospitality", sub: "Restaurant POS, kitchen display, stock, rooms, rent and resident service — for restaurants, cafés, hotels, PGs and co-living." },
     apps: ["restaurant-pos", "stay", "inventory", "desk", "pay", "bookings", "people", "analytics"],
@@ -88,7 +91,7 @@ export const hubs: Hub[] = [
     faq: commonFaq("Hospitality"),
   },
   {
-    slug: "finance", name: "Finance & BFSI", kind: "industry", iconApp: "gold-loan",
+    slug: "finance", screen: "dashboard", name: "Finance & BFSI", kind: "industry", iconApp: "gold-loan",
     line: "Gold loan, chit and lending",
     hero: { title: "Camus for Finance & BFSI", sub: "Gold loans, pawn, chit funds and community lending — with complete audit trails, receipts and statements." },
     apps: ["gold-loan", "chit-savings", "billing", "pay", "crm", "reports", "people", "studio"],
@@ -103,14 +106,14 @@ export const hubs: Hub[] = [
     faq: commonFaq("Education"),
   },
   {
-    slug: "real-estate", name: "Real Estate", kind: "industry", iconApp: "property",
+    slug: "real-estate", screen: "crm", name: "Real Estate", kind: "industry", iconApp: "property",
     line: "Builders, agents, property managers",
     hero: { title: "Camus for Real Estate", sub: "Leads, site visits, bookings, collections and rentals — for builders, brokers and property managers." },
     apps: ["property", "crm", "field-sales", "pay", "projects", "sites"],
     faq: commonFaq("Real Estate"),
   },
   {
-    slug: "manufacturing", name: "Manufacturing", kind: "industry", iconApp: "manufacturing",
+    slug: "manufacturing", screen: "dashboard", name: "Manufacturing", kind: "industry", iconApp: "manufacturing",
     line: "Factories and workshops",
     hero: { title: "Camus for Manufacturing", sub: "Bills of material, production orders, raw-material stock, purchase and dispatch in one system." },
     apps: ["manufacturing", "erp", "inventory", "purchase", "people", "analytics"],
@@ -124,7 +127,7 @@ export const hubs: Hub[] = [
     faq: commonFaq("public-sector"),
   },
   {
-    slug: "enterprise", name: "Enterprise", kind: "size", iconApp: "erp",
+    slug: "enterprise", screen: "dashboard", name: "Enterprise", kind: "size", iconApp: "erp",
     line: "Large and multi-location organisations",
     hero: { title: "Camus for Enterprise", sub: "Dedicated solution architects, data hosted in India, role-based access, audit trails and integration with the systems you already run." },
     apps: ["erp", "crm", "people", "analytics", "integrations", "studio"],
@@ -132,7 +135,7 @@ export const hubs: Hub[] = [
     faq: commonFaq("enterprise"),
   },
   {
-    slug: "startups", name: "Startups & new businesses", kind: "size", iconApp: "sites",
+    slug: "startups", screen: "pos", name: "Startups & new businesses", kind: "size", iconApp: "sites",
     line: "Open with your systems ready",
     hero: { title: "Camus for New Businesses", sub: "GST billing, stock, staff and your website ready before opening day — set up by us, so you can focus on customers." },
     apps: ["sites", "billing", "pos", "crm", "people", "pay"],
@@ -140,7 +143,7 @@ export const hubs: Hub[] = [
     faq: commonFaq("new"),
   },
   {
-    slug: "msme", name: "MSMEs", kind: "size", iconApp: "billing",
+    slug: "msme", screen: "dashboard", name: "MSMEs", kind: "size", iconApp: "billing",
     line: "Growing small and medium businesses",
     hero: { title: "Camus for MSMEs", sub: "Move off registers, spreadsheets and disconnected tools. One platform for billing, stock, customers and staff — with our team doing the setup." },
     apps: ["billing", "inventory", "crm", "people", "payroll", "analytics"],
