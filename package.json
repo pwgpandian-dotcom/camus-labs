@@ -1,0 +1,15 @@
+{
+  "name": "aurum-pos",
+  "version": "1.0.0",
+  "description": "Aurum Cafe POS - multi-branch billing, KOT, kitchen display and owner dashboard",
+  "private": true,
+  "dependencies": {
+    "@vercel/functions": "^1.5.2",
+    "dotenv": "16.4.5",
+    "express": "4.21.2",
+    "pg": "^8.13.1"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}
