@@ -1,0 +1,51 @@
+// Full API test against any POS URL: login, menu, KOT, checkout, double-tap, void, stock, reports, staff, item edit.
+const B = (process.env.URL || 'http://localhost:3100') + '/api';
+const j = async (u, o = {}) => { const r = await fetch(B + u, { method: o.body ? 'POST' : 'GET', headers: { 'content-type': 'application/json', ...(o.t ? { authorization: 'Bearer ' + o.t } : {}) }, body: o.body ? JSON.stringify(o.body) : undefined }); const t = await r.text(); let d; try { d = JSON.parse(t); } catch (e) { d = t; } if (!r.ok) throw new Error(u + ' ' + r.status + ' ' + t.slice(0, 300)); return d; };
+const ok = (c, m) => { if (!c) { console.log('✗', m); process.exitCode = 1; } else console.log('✓', m); };
+(async () => {
+  const brs = await j('/branches'); ok(brs.length >= 1, 'branches ' + brs.map((b) => b.code));
+  const own = (await j('/login', { body: { branch_id: 1, pin: '1234' } })).token;
+  const t = (await j('/login', { body: { branch_id: 1, pin: '1111' } })).token;
+  const mgr = (await j('/login', { body: { branch_id: 1, pin: '2222' } })).token;
+  const boot = await j('/bootstrap', { t }); ok(boot.items.length > 50 && boot.branch.code === 'HSR', `bootstrap items=${boot.items.length} today=${JSON.stringify(boot.today)}`);
+  const mom = boot.items.find((i) => /chicken fried momos/i.test(i.name)), chai = boot.items.find((i) => /aurum chai/i.test(i.name));
+  const inv0 = (await j('/inventory', { t })).items; const stock = (n) => Number(inv0.find((x) => x.name === n)?.qty);
+  await j('/inventory/move', { t: mgr, body: { ingredient_id: inv0.find((x) => /milk/i.test(x.name)).id, kind: 'IN', qty: 5000, amount: 300 } });
+  const inv1 = (await j('/inventory', { t })).items; ok(Number(inv1.find((x) => /milk/i.test(x.name)).qty) === Number(inv0.find((x) => /milk/i.test(x.name)).qty) + 5000, 'stock IN milk +5000');
+  // KOT then checkout
+  const ref = 'r' + Date.now();
+  const k = await j('/orders/kot', { t, body: { order_type: 'DINE_IN', lines: [{ item_id: mom.id, qty: 12 }, { item_id: chai.id, qty: 2 }], client_ref: ref } });
+  const k2 = await j('/orders/kot', { t, body: { order_type: 'DINE_IN', lines: [{ item_id: mom.id, qty: 12 }, { item_id: chai.id, qty: 2 }], client_ref: ref } });
+  ok(k.order_id === k2.order_id && k.kots.length === 2, `KOT order ${k.order_id}, ${k.kots.length} KOTs, double tap same order`);
+  const pend = await j('/kots/pending', { t }); ok(pend.length >= 2, 'pending KOTs ' + pend.length);
+  await j('/kots/' + pend[0].id + '/ready', { t, body: {} });
+  const open = await j('/orders/open', { t }); const line = open.find((o) => o.id === k.order_id).lines.find((l) => l.item_id === chai.id);
+  await j('/orders/' + k.order_id + '/void', { t, body: { line_id: line.id, qty: 1, manager_pin: '2222' } });
+  const cref = 'c' + Date.now();
+  const [c1, c2] = await Promise.all([1, 2].map(() => j('/checkout', { t, body: { order_id: k.order_id, order_type: 'DINE_IN', lines: [], pay_mode: 'UPI', client_ref: cref } })));
+  ok(c1.bill_id === c2.bill_id, `checkout bill ${c1.bill.bill_no} total ${c1.bill.total}, double tap -> one bill`);
+  ok(c1.bill.lines.length === 2 && c1.bill.lines.find((l) => l.name === chai.name).qty === 1, 'void reduced chai to 1');
+  const d = new Date(c1.bill.created_at); ok(Math.abs(d - Date.now()) < 5 * 60e3, 'bill time is now: ' + c1.bill.created_at);
+  // direct charge with discount + manager pin
+  const c3 = await j('/checkout', { t, body: { order_type: 'PICK_UP', lines: [{ item_id: mom.id, qty: 30 }], pay_mode: 'CASH', discount_pct: 10, manager_pin: '2222', client_ref: 'd' + Date.now() } });
+  ok(c3.bill.discount > 0, `pick up 30 momos, 10% off -> ${c3.bill.total}`);
+  const bills = await j('/bills', { t }); ok(bills.length >= 2, 'bills today ' + bills.length);
+  const srch = await j('/bills?q=' + encodeURIComponent(c3.bill.bill_no.slice(-3)), { t }); ok(srch.length >= 1, 'bill search');
+  await j('/bills/' + c3.bill_id + '/cancel', { t, body: { reason: 'test', manager_pin: '2222' } });
+  const dc = await j('/reports/dayclose', { t }); ok(dc.bills >= 1 && dc.cancelled.n >= 1, `day close bills=${dc.bills} total=${dc.total} cancelled=${dc.cancelled.n}`);
+  const rep = await j('/reports/summary?days=7', { t: mgr }); ok(rep.kpi.bills >= 1 && rep.hours.length >= 1 && rep.daily.length >= 1, `report kpi ${JSON.stringify(rep.kpi)} hours ${rep.hours.length}`);
+  const inv2 = (await j('/inventory', { t })).items; const mm = inv2.find((x) => /momo/i.test(x.name));
+  ok(mm && Number(mm.used_today) > 0, `stock auto-deduct ${mm && mm.name} used_today=${mm && mm.used_today}`);
+  const moves = await j('/inventory/moves', { t }); ok(moves.length > 0, 'stock history ' + moves.length);
+  const rec = await j('/recipes', { t }); ok(rec.length > 100, 'recipes ' + rec.length);
+  await j('/items/' + chai.id + '/availability', { t: mgr, body: { available: false } }).catch(async () => j('/items/' + chai.id + '/toggle', { t: mgr, body: {} })).catch((e) => console.log('  (availability route) ', e.message.slice(0, 80)));
+  await j('/items/' + chai.id + '/availability', { t: mgr, body: { available: true } });
+  const staff = await j('/staff', { t: mgr }); ok(staff.length >= 4, 'staff ' + staff.length);
+  const cats = boot.allCategories || boot.categories;
+  const ni = await j('/items', { t: mgr, body: { category_id: cats[0].id, code: 'T' + (Date.now() % 100000), name: 'Test Masala Tea', price: 30, is_veg: 1 } });
+  ok(ni.ok !== false, 'add menu item');
+  await j('/inventory/settings', { t: mgr, body: { auto_off: true } }); await j('/inventory/settings', { t: mgr, body: { auto_off: false } }); ok(true, 'auto sold-out toggle');
+  await j('/branch', { t: mgr, body: { ...boot.branch, gst_rate: 5 } }); const b2 = await j('/bootstrap', { t }); ok(Number(b2.branch.gst_rate) === 5, 'branch settings save');
+  await j('/branch', { t: mgr, body: { ...boot.branch, gst_rate: 0 } });
+  console.log(process.exitCode ? 'SOME FAILED' : 'ALL PASSED');
+})().catch((e) => { console.log('FATAL', e.message); process.exitCode = 1; });
